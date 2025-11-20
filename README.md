@@ -90,11 +90,44 @@ The development server runs on port 8080 by default and includes:
 
 ## 🌐 Deployment
 
-The project can be deployed using:
+### Vercel Deployment (Recommended)
 
-- Netlify (configured with `netlify.toml`)
-- Vercel
-- Traditional hosting with Node.js support
+1. **Install Vercel CLI** (optional):
+
+```bash
+npm i -g vercel
+```
+
+2. **Deploy to Vercel**:
+
+```bash
+# Login to Vercel
+vercel login
+
+# Deploy
+vercel
+```
+
+Or simply:
+
+- Push your code to GitHub
+- Import the project in [Vercel Dashboard](https://vercel.com)
+- Vercel will automatically detect the configuration
+
+**Configuration**: The project includes `vercel.json` for automatic configuration.
+
+### Netlify Deployment
+
+The project is also configured for Netlify deployment with `netlify.toml`.
+
+### Traditional Hosting
+
+For traditional Node.js hosting:
+
+```bash
+pnpm build
+pnpm start
+```
 
 ## 📱 Mobile Optimization
 
