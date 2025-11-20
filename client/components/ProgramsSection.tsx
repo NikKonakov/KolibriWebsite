@@ -6,7 +6,7 @@ interface ProgramItem {
 }
 
 export default function ProgramsSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndexes, setOpenIndexes] = useState<number[]>([0, 1, 2]);
 
   const programs: ProgramItem[] = [
     {
@@ -65,14 +65,20 @@ export default function ProgramsSection() {
             className="border-t border-[#E2E8F0] pb-4 bg-black/[0.01]"
           >
             <button
-              onClick={() => setOpenIndex(openIndex === index ? null : index)}
+              onClick={() => {
+                if (openIndexes.includes(index)) {
+                  setOpenIndexes(openIndexes.filter((i) => i !== index));
+                } else {
+                  setOpenIndexes([...openIndexes, index]);
+                }
+              }}
               className="w-full flex items-center justify-between py-4 text-left hover:bg-black/[0.02] transition-colors"
             >
               <h3 className="text-base md:text-lg text-brand-dark font-medium flex-1">
                 {program.title}
               </h3>
             </button>
-            {openIndex === index && (
+            {openIndexes.includes(index) && (
               <p className="text-sm md:text-base text-brand-text font-normal whitespace-pre-wrap">
                 {program.content}
               </p>
