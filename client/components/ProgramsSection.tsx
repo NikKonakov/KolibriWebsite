@@ -12,7 +12,7 @@ export default function ProgramsSection() {
     {
       title: "Уроки в классе",
       content: `Мы понимаем, что у каждого ребёнка свои цели и интересы, поэтому предлагаем разные направления обучения:
-	•	Русский как иностранный (РКИ) – для тех, кто делает первые шаги в языке.
+	•	Русский как иностранный (РКИ) ��� для тех, кто делает первые шаги в языке.
 	•	Углублённое изучение – для детей, уже владеющих русским и желающих совершенствоваться.
 	•	Творческая программа – интересные и яркие проекты.
 	•	🎶 Концерты и сценические выступления – дети выходят на сцену, учатся уверенности и раскрывают свои таланты.`,
@@ -27,7 +27,7 @@ export default function ProgramsSection() {
 	•	Театр у микрофона 🎤
 	•	🌍 Практика языка в реальных ситуациях
 
-Это не просто занятия — это возможность почувствовать русский язык частью жизни.`,
+Это не просто занятия — это возможность почувствовать русский язык частью ��изни.`,
     },
     {
       title: "Уровни классов",
@@ -54,8 +54,8 @@ export default function ProgramsSection() {
   ];
 
   return (
-    <div className="w-full max-w-[345px] lg:max-w-2xl mx-auto p-4 flex flex-col items-center gap-7 rounded-xl border border-black/25 bg-white">
-      <h2 className="text-base md:text-xl text-brand-dark text-center font-medium">
+    <div className="w-full max-w-[345px] mx-auto p-4 flex flex-col items-center gap-4 rounded-xl border border-black/25 bg-white">
+      <h2 className="text-base text-brand-dark text-center font-medium">
         Наши Программы
       </h2>
       <div className="w-full flex flex-col gap-0">
@@ -72,14 +72,14 @@ export default function ProgramsSection() {
                   setOpenIndexes([...openIndexes, index]);
                 }
               }}
-              className="w-full flex items-center justify-between py-4 text-left hover:bg-black/[0.02] transition-colors"
-            >
-              <h3 className="text-base md:text-lg text-brand-dark font-medium flex-1">
+              className="w-full flex items-center justify-between py-3 text-left hover:bg-black/[0.02] transition-colors"
+              >
+              <h3 className="text-sm md:text-base text-brand-dark font-medium flex-1">
                 {program.title}
               </h3>
             </button>
             {openIndexes.includes(index) && (
-              <p className="text-sm md:text-base text-brand-text font-normal whitespace-pre-wrap">
+              <p className="text-xs md:text-sm text-brand-text font-normal whitespace-pre-wrap">
                 {program.content}
               </p>
             )}

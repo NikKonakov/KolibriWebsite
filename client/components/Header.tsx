@@ -4,11 +4,11 @@ export default function Header() {
   return (
     <header className="w-full bg-white sticky top-0 z-50">
       <div className="flex items-center justify-center gap-6 bg-brand-orange px-2.5 py-0 h-[99px] shadow-md">
-        <div className="w-[90px] h-[91px] flex-shrink-0 relative shadow-md">
+        <div className="w-[90px] h-[91px] flex-shrink-0 relative shadow-md overflow-hidden">
           <img
             src="https://api.builder.io/api/v1/image/assets/TEMP/217eb959e9cdda3f0eba327777f87ac5199178bc?width=190"
             alt="Kolibri Logo"
-            className="w-[95px] h-[112px] absolute -left-[5px] -top-[13px]"
+            className="w-[95px] h-[112px] absolute -left-[5px] -top-[13px] rounded-none"
           />
         </div>
         <h1 className="text-2xl text-brand-dark text-center font-normal w-[209px]">
