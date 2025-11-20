@@ -73,7 +73,7 @@ export default function ProgramsSection() {
                 }
               }}
               className="w-full flex items-center justify-between py-3 text-left hover:bg-black/[0.02] transition-colors"
-              >
+            >
               <h3 className="text-sm md:text-base text-brand-dark font-medium flex-1">
                 {program.title}
               </h3>

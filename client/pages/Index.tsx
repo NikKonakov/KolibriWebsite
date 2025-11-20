@@ -19,10 +19,10 @@ export default function Index() {
           backgroundRepeat: "no-repeat",
         }}
       />
-      
+
       <div className="relative z-10">
         <Header />
-        
+
         <main className="flex flex-col items-center gap-14 px-4 py-10 md:px-10 md:py-16">
           <WelcomeBanner />
           <WhyUsSection />
@@ -30,7 +30,7 @@ export default function Index() {
           <NewsSection />
           <ReviewsSection />
         </main>
-        
+
         <Footer />
       </div>
     </div>

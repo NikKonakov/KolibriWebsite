@@ -15,7 +15,7 @@ export default function Header() {
           Школа &quot;Колибри&quot;
         </h1>
       </div>
-      
+
       <nav className="flex items-center justify-center gap-2.5 bg-white px-2 py-8 h-[73px]">
         <Link
           to="/"
@@ -36,7 +36,7 @@ export default function Header() {
           Библиотека
         </Link>
       </nav>
-      
+
       <div className="w-full h-[1px] bg-[#AFABAB]/50" />
     </header>
   );

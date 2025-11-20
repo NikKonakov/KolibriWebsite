@@ -5,9 +5,9 @@ export default function WelcomeBanner() {
         Добро пожаловать в Школу &quot;Колибри&quot;
       </h2>
       <p className="text-[12px] md:text-sm text-brand-dark text-center font-normal">
-        Мы создаём пространство, где обучение русскому языку становится не только
-        полезным, но и увлекательным путешествием в мир знаний, культуры и
-        творчества.
+        Мы создаём пространство, где обучение русскому языку становится не
+        только полезным, но и увлекательным путешествием в мир знаний, культуры
+        и творчества.
       </p>
       <button className="px-4 py-2 bg-brand-orange rounded-md text-white text-sm font-medium hover:bg-brand-orange/90 transition-colors">
         Запишитесь на пробный урок!
