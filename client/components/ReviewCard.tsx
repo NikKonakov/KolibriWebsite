@@ -1,33 +1,79 @@
 interface ReviewCardProps {
   name: string;
   review: string;
+  fbLink?: string;
+  avatarColor?: string;
 }
 
-export default function ReviewCard({ name, review }: ReviewCardProps) {
+export default function ReviewCard({
+  name,
+  review,
+  fbLink,
+  avatarColor,
+}: ReviewCardProps) {
+  // Get initials from name
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((word) => word[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  // Random gradient colors if not provided
+  const gradients = [
+    "from-brand-orange to-amber-400",
+    "from-blue-400 to-blue-600",
+    "from-green-400 to-green-600",
+    "from-purple-400 to-purple-600",
+    "from-pink-400 to-pink-600",
+    "from-red-400 to-red-600",
+    "from-indigo-400 to-indigo-600",
+    "from-teal-400 to-teal-600",
+  ];
+
+  const randomGradient =
+    avatarColor || gradients[Math.floor(Math.random() * gradients.length)];
+
+  const content = (
+    <>
+      <div className="flex items-center gap-3 w-full">
+        <div
+          className={`w-[50px] h-[50px] rounded-full bg-gradient-to-br ${randomGradient} flex items-center justify-center flex-shrink-0`}
+        >
+          <span className="text-white font-bold text-lg">
+            {getInitials(name)}
+          </span>
+        </div>
+        <h3 className="text-sm md:text-base text-black font-semibold flex-1">
+          {name}
+        </h3>
+      </div>
+      <div className="flex-1 w-full">
+        <p className="text-xs md:text-sm text-black font-normal leading-relaxed">
+          {review}
+        </p>
+      </div>
+    </>
+  );
+
+  if (fbLink) {
+    return (
+      <a
+        href={fbLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex flex-col items-start gap-3 w-[280px] min-h-[200px] flex-shrink-0 p-4 border border-black/25 rounded-xl bg-brand-light snap-start hover:shadow-lg transition-shadow cursor-pointer"
+      >
+        {content}
+      </a>
+    );
+  }
+
   return (
-    <div className="flex flex-col items-center gap-2 w-[183px] flex-shrink-0 p-3 border border-black/25 rounded-xl bg-brand-light">
-      <div className="w-[73px] h-[73px] relative">
-        <svg className="w-full h-full" viewBox="0 0 73 73" fill="none">
-          <circle cx="36.5" cy="36.5" r="36.5" fill="#FFB84D" />
-          <path
-            d="M36.5 9.125L43.648 26.645L62.5367 28.0442L48.0584 40.2717L52.5905 58.6433L36.5 48.6667L20.4096 58.6433L24.9417 40.2717L10.4634 28.0442L29.3521 26.645L36.5 9.125Z"
-            fill="#FFA629"
-          />
-          <path
-            d="M36.5 9.125L29.3521 26.645L10.4634 28.0442L24.9417 40.2717L20.4096 58.6433L36.5 48.6667M36.5 9.125L43.648 26.645L62.5367 28.0442L48.0584 40.2717L52.5905 58.6433L36.5 48.6667"
-            stroke="#FFA629"
-            strokeWidth="6.08333"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-      <h3 className="text-xl text-black text-center font-normal underline">
-        {name}
-      </h3>
-      <div className="flex-1 overflow-y-auto max-h-[150px]">
-        <p className="text-sm text-black font-normal">{review}</p>
-      </div>
+    <div className="flex flex-col items-start gap-3 w-[280px] min-h-[200px] flex-shrink-0 p-4 border border-black/25 rounded-xl bg-brand-light snap-start">
+      {content}
     </div>
   );
 }

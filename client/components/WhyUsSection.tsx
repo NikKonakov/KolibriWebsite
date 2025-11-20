@@ -1,30 +1,23 @@
 import FeatureCard from "./FeatureCard";
+import { GraduationCap, User, Lightbulb, Trophy, Heart } from "lucide-react";
 
 export default function WhyUsSection() {
   const features = [
     {
       icon: (
-        <svg className="w-full h-full" viewBox="0 0 73 73" fill="none">
-          <circle cx="36.5" cy="36.5" r="36.5" fill="#FFB84D" />
-          <path
-            d="M40.8333 34.7083C41.9163 34.7083 42.9549 34.2781 43.7207 33.5124C44.4865 32.7466 44.9167 31.708 44.9167 30.625V8.16668C44.9167 7.08371 44.4865 6.0451 43.7207 5.27932C42.9549 4.51355 41.9163 4.08334 40.8333 4.08334H19.3142C20.0288 5.32876 20.4167 6.73751 20.4167 8.16668H40.8333V30.625H22.4583V34.7083M30.625 14.2917V18.375H18.375V44.9167H14.2917V32.6667H10.2083V44.9167H6.125V28.5833H3.0625V18.375C3.0625 17.292 3.49271 16.2534 4.25848 15.4877C5.02425 14.7219 6.06287 14.2917 7.14583 14.2917H30.625ZM16.3333 8.16668C16.3333 9.24964 15.9031 10.2883 15.1374 11.054C14.3716 11.8198 13.333 12.25 12.25 12.25C11.167 12.25 10.1284 11.8198 9.36265 11.054C8.59687 10.2883 8.16667 9.24964 8.16667 8.16668C8.16667 7.08371 8.59687 6.0451 9.36265 5.27932C10.1284 4.51355 11.167 4.08334 12.25 4.08334C13.333 4.08334 14.3716 4.51355 15.1374 5.27932C15.9031 6.0451 16.3333 7.08371 16.3333 8.16668Z"
-            fill="#AFF4C6"
-          />
-        </svg>
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-brand-orange to-amber-400 rounded-full">
+          <GraduationCap className="w-10 h-10 text-white" strokeWidth={2} />
+        </div>
       ),
       title: "Опытные преподаватели",
       description:
-        "На��и педагоги — профессионалы с многолетним опытом, влюблённые в русский язык и культуру.",
+        "Наши педагоги — профессионалы с многолетним опытом, влюблённые в русский язык и культуру.",
     },
     {
       icon: (
-        <svg className="w-full h-full" viewBox="0 0 73 73" fill="none">
-          <circle cx="36.5" cy="36.5" r="36.5" fill="#FFB84D" />
-          <path
-            d="M36.4999 6.08334C39.2253 6.08334 41.8654 6.44226 44.3778 7.11447L37.9113 13.578C37.4207 14.0706 36.988 14.6175 36.6216 15.2083H36.4999C32.2888 15.2083 28.1723 16.4571 24.6709 18.7966C21.1695 21.1362 18.4405 24.4615 16.829 28.352C15.2175 32.2426 14.7958 36.5236 15.6174 40.6538C16.4389 44.784 18.4667 48.5778 21.4444 51.5555C24.4221 54.5332 28.2159 56.561 32.3461 57.3826C36.4763 58.2041 40.7573 57.7825 44.6479 56.1709C48.5384 54.5594 51.8637 51.8304 54.2033 48.329C56.5429 44.8276 57.7916 40.7111 57.7916 36.5V36.3783C58.3796 36.0133 58.9221 35.5824 59.4189 35.0856L65.8855 28.6221C66.5577 31.1345 66.9166 33.7747 66.9166 36.5C66.9166 53.2991 53.299 66.9167 36.4999 66.9167C19.7008 66.9167 6.08325 53.2991 6.08325 36.5C6.08325 19.7009 19.7008 6.08334 36.4999 6.08334Z"
-            fill="#F24822"
-          />
-        </svg>
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-400 to-blue-600 rounded-full">
+          <User className="w-10 h-10 text-white" strokeWidth={2} />
+        </div>
       ),
       title: "Индивидуальный подход",
       description:
@@ -32,10 +25,9 @@ export default function WhyUsSection() {
     },
     {
       icon: (
-        <svg className="w-full h-full" viewBox="0 0 73 73" fill="none">
-          <circle cx="36.5" cy="36.5" r="36.5" fill="#FFB84D" />
-          <circle cx="36.5" cy="36.5" r="20" fill="#AFF4C6" opacity="0.5" />
-        </svg>
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-green-300 to-green-500 rounded-full">
+          <Lightbulb className="w-10 h-10 text-white" strokeWidth={2} />
+        </div>
       ),
       title: "Креативные методики",
       description:
@@ -43,10 +35,9 @@ export default function WhyUsSection() {
     },
     {
       icon: (
-        <svg className="w-full h-full" viewBox="0 0 73 73" fill="none">
-          <circle cx="36.5" cy="36.5" r="36.5" fill="#FFB84D" />
-          <circle cx="36.5" cy="36.5" r="20" fill="#F24822" opacity="0.5" />
-        </svg>
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-red-400 to-red-600 rounded-full">
+          <Trophy className="w-10 h-10 text-white" strokeWidth={2} />
+        </div>
       ),
       title: "Развитие талантов",
       description:
@@ -54,10 +45,9 @@ export default function WhyUsSection() {
     },
     {
       icon: (
-        <svg className="w-full h-full" viewBox="0 0 73 73" fill="none">
-          <circle cx="36.5" cy="36.5" r="36.5" fill="#FFB84D" />
-          <circle cx="36.5" cy="36.5" r="20" fill="#9747FF" opacity="0.5" />
-        </svg>
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-400 to-purple-600 rounded-full">
+          <Heart className="w-10 h-10 text-white" strokeWidth={2} />
+        </div>
       ),
       title: "Дружелюбная атмосфера",
       description:
@@ -66,8 +56,8 @@ export default function WhyUsSection() {
   ];
 
   return (
-    <div className="w-full max-w-[344px] lg:max-w-4xl mx-auto p-5 border border-black/25 rounded-xl bg-white">
-      <div className="flex items-center gap-5 overflow-x-auto pb-2 scrollbar-hide">
+    <div className="w-full max-w-[345px] lg:max-w-4xl mx-auto p-5 border border-black/25 rounded-xl bg-white">
+      <div className="flex items-stretch gap-5 overflow-x-auto pb-2 snap-x snap-mandatory scroll-smooth">
         {features.map((feature, index) => (
           <FeatureCard key={index} {...feature} />
         ))}

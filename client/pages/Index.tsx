@@ -12,8 +12,7 @@ export default function Index() {
       <div
         className="absolute inset-0 z-0 opacity-30"
         style={{
-          backgroundImage:
-            "url('https://api.builder.io/api/v1/image/assets/TEMP/a137529b45294faa0f7882a344cbb0fdbf732be7?width=866')",
+          backgroundImage: "url('/bckgrnd.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
