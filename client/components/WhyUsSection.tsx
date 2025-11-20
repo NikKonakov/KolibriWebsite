@@ -14,7 +14,7 @@ export default function WhyUsSection() {
       ),
       title: "Опытные преподаватели",
       description:
-        "Наши педагоги — профессионалы с многолетним опытом, влюблённые в русский язык и культуру.",
+        "На��и педагоги — профессионалы с многолетним опытом, влюблённые в русский язык и культуру.",
     },
     {
       icon: (
@@ -31,19 +31,34 @@ export default function WhyUsSection() {
         "Мы учитываем уровень, возраст и интересы каждого ребёнка, создавая комфортную среду для обучения.",
     },
     {
-      icon: <div className="w-full h-full bg-brand-orange rounded-full" />,
+      icon: (
+        <svg className="w-full h-full" viewBox="0 0 73 73" fill="none">
+          <circle cx="36.5" cy="36.5" r="36.5" fill="#FFB84D" />
+          <circle cx="36.5" cy="36.5" r="20" fill="#AFF4C6" opacity="0.5" />
+        </svg>
+      ),
       title: "Креативные методики",
       description:
         "Игры, проекты, театр, кино — обучение через творчество и живое общение.",
     },
     {
-      icon: <div className="w-full h-full bg-brand-orange rounded-full" />,
+      icon: (
+        <svg className="w-full h-full" viewBox="0 0 73 73" fill="none">
+          <circle cx="36.5" cy="36.5" r="36.5" fill="#FFB84D" />
+          <circle cx="36.5" cy="36.5" r="20" fill="#F24822" opacity="0.5" />
+        </svg>
+      ),
       title: "Развитие талантов",
       description:
         "Концерты, выступления и творческие проекты помогают детям раскрыть свои способности.",
     },
     {
-      icon: <div className="w-full h-full bg-brand-orange rounded-full" />,
+      icon: (
+        <svg className="w-full h-full" viewBox="0 0 73 73" fill="none">
+          <circle cx="36.5" cy="36.5" r="36.5" fill="#FFB84D" />
+          <circle cx="36.5" cy="36.5" r="20" fill="#9747FF" opacity="0.5" />
+        </svg>
+      ),
       title: "Дружелюбная атмосфера",
       description:
         "Добрая и семейная обстановка, где каждый ребёнок чувствует себя частью большой команды.",
