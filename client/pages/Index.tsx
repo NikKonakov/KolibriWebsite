@@ -1,61 +1,37 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
+import Header from "@/components/Header";
+import WelcomeBanner from "@/components/WelcomeBanner";
+import WhyUsSection from "@/components/WhyUsSection";
+import ProgramsSection from "@/components/ProgramsSection";
+import NewsSection from "@/components/NewsSection";
+import ReviewsSection from "@/components/ReviewsSection";
+import Footer from "@/components/Footer";
 
 export default function Index() {
-  const [exampleFromServer, setExampleFromServer] = useState("");
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchDemo();
-  }, []);
-
-  // Example of how to fetch data from the server (if needed)
-  const fetchDemo = async () => {
-    try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setExampleFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
-    }
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: FUSION_GENERATION_APP_PLACEHOLDER replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-            />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 hidden max-w-md">{exampleFromServer}</p>
+    <div className="min-h-screen w-full bg-brand-light relative overflow-x-hidden">
+      <div
+        className="absolute inset-0 z-0 opacity-30"
+        style={{
+          backgroundImage:
+            "url('https://api.builder.io/api/v1/image/assets/TEMP/a137529b45294faa0f7882a344cbb0fdbf732be7?width=866')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+      
+      <div className="relative z-10">
+        <Header />
+        
+        <main className="flex flex-col items-center gap-14 px-4 py-10 md:px-10 md:py-16">
+          <WelcomeBanner />
+          <WhyUsSection />
+          <ProgramsSection />
+          <NewsSection />
+          <ReviewsSection />
+        </main>
+        
+        <Footer />
       </div>
     </div>
   );
