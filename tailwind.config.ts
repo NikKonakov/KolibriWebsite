@@ -57,6 +57,12 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        brand: {
+          orange: "#FFB84D",
+          dark: "#2C3E50",
+          light: "#F8F9FA",
+          text: "#5A6C7D",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
