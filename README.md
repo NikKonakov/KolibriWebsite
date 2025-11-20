@@ -92,29 +92,116 @@ The development server runs on port 8080 by default and includes:
 
 ### Vercel Deployment (Recommended)
 
-1. **Install Vercel CLI** (optional):
+#### Option 1: Via GitHub (Easiest)
+
+1. Push your code to GitHub
+2. Go to [Vercel Dashboard](https://vercel.com/dashboard)
+3. Click **"Add New"** → **"Project"**
+4. Import your GitHub repository
+5. Vercel will auto-detect settings and deploy
+
+#### Option 2: Using Vercel CLI
+
+**Step 1: Install Vercel CLI**
 
 ```bash
 npm i -g vercel
 ```
 
-2. **Deploy to Vercel**:
+**Step 2: Login to Vercel**
 
 ```bash
-# Login to Vercel
 vercel login
+```
 
-# Deploy
+This will open your browser to authenticate.
+
+**Step 3: Deploy**
+
+```bash
+# For production deployment
+vercel --prod
+
+# For preview deployment (development)
 vercel
 ```
 
-Or simply:
+**Step 4: Link to Existing Project (if needed)**
 
-- Push your code to GitHub
-- Import the project in [Vercel Dashboard](https://vercel.com)
-- Vercel will automatically detect the configuration
+If you already have a Vercel project:
 
-**Configuration**: The project includes `vercel.json` for automatic configuration.
+```bash
+vercel link
+```
+
+Follow the prompts to link to your existing project.
+
+#### Vercel CLI Commands
+
+```bash
+# Deploy to production
+vercel --prod
+
+# Deploy preview (staging)
+vercel
+
+# Check deployment status
+vercel inspect <deployment-url>
+
+# List all deployments
+vercel ls
+
+# Remove a deployment
+vercel rm <deployment-name>
+
+# View logs
+vercel logs <deployment-url>
+
+# Pull environment variables
+vercel env pull
+
+# Add environment variable
+vercel env add <NAME>
+```
+
+#### Project Configuration
+
+The project includes:
+
+- `vercel.json` - Vercel configuration file
+- `.vercelignore` - Files to exclude from deployment
+- `api/` folder - Serverless functions for API endpoints
+
+#### Environment Variables
+
+To add environment variables in Vercel:
+
+**Via Dashboard:**
+
+1. Go to Project Settings → Environment Variables
+2. Add your variables
+
+**Via CLI:**
+
+```bash
+vercel env add VARIABLE_NAME
+```
+
+#### Custom Domain
+
+To add a custom domain:
+
+**Via Dashboard:**
+
+1. Go to Project Settings → Domains
+2. Add your domain
+3. Configure DNS records as instructed
+
+**Via CLI:**
+
+```bash
+vercel domains add yourdomain.com
+```
 
 ### Netlify Deployment
 

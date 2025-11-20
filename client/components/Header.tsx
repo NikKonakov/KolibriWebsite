@@ -13,7 +13,7 @@ export default function Header() {
           <div className="absolute -inset-1 bg-white/30 rounded-full blur-md group-hover:bg-white/40 transition-all duration-300"></div>
           <div className="relative w-[100px] h-[100px] md:w-[120px] md:h-[120px] flex-shrink-0 rounded-full overflow-hidden shadow-xl bg-white ring-4 ring-white/50 group-hover:ring-white/70 transition-all duration-300 transform group-hover:scale-105">
             <img
-              src="/kolibri.png"
+              src="/kolibriImageCanva.jpg"
               alt="Kolibri Logo"
               className="w-full h-full object-cover"
             />
