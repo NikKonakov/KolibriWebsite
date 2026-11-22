@@ -15,6 +15,10 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: "dist/spa",
   },
+  define: {
+    // Same value in the prerendered HTML and in the browser bundle.
+    __BUILD_YEAR__: JSON.stringify(new Date().getFullYear()),
+  },
   plugins: [react(), expressPlugin()],
   resolve: {
     alias: {

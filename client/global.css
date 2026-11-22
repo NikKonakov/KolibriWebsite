@@ -1,6 +1,4 @@
-/** @import must precede all other statements */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&display=swap");
+/* Fonts are loaded with <link> tags in index.html (faster than CSS @import). */
 
 @tailwind base;
 @tailwind components;

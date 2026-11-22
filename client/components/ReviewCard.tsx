@@ -21,26 +21,15 @@ export default function ReviewCard({
       .slice(0, 2);
   };
 
-  // Random gradient colors if not provided
-  const gradients = [
-    "from-brand-orange to-amber-400",
-    "from-blue-400 to-blue-600",
-    "from-green-400 to-green-600",
-    "from-purple-400 to-purple-600",
-    "from-pink-400 to-pink-600",
-    "from-red-400 to-red-600",
-    "from-indigo-400 to-indigo-600",
-    "from-teal-400 to-teal-600",
-  ];
-
-  const randomGradient =
-    avatarColor || gradients[Math.floor(Math.random() * gradients.length)];
+  // Fixed fallback colour: a random one would differ between the
+  // prerendered HTML and the browser and break hydration.
+  const gradient = avatarColor || "from-brand-orange to-amber-400";
 
   const content = (
     <>
       <div className="flex items-center gap-3 w-full">
         <div
-          className={`w-[50px] h-[50px] rounded-full bg-gradient-to-br ${randomGradient} flex items-center justify-center flex-shrink-0`}
+          className={`w-[50px] h-[50px] rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center flex-shrink-0`}
         >
           <span className="text-white font-bold text-lg">
             {getInitials(name)}

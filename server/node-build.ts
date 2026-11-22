@@ -12,14 +12,14 @@ const distPath = path.join(__dirname, "../spa");
 // Serve static files
 app.use(express.static(distPath));
 
-// Handle React Router - serve index.html for all non-API routes
+// "/" and "/en/" are prerendered files served by express.static above.
+// Anything else is a real 404 (a 200 here would be a "soft 404" for Google).
 app.get("*", (req, res) => {
-  // Don't serve index.html for API routes
   if (req.path.startsWith("/api/") || req.path.startsWith("/health")) {
     return res.status(404).json({ error: "API endpoint not found" });
   }
 
-  res.sendFile(path.join(distPath, "index.html"));
+  res.status(404).sendFile(path.join(distPath, "404.html"));
 });
 
 app.listen(port, () => {

@@ -88,6 +88,15 @@ The development server runs on port 8080 by default and includes:
 6. **Reviews**: Parent and student testimonials
 7. **Footer**: Contact information and social media links
 
+## 🔎 SEO & Languages
+
+- **Two languages**: Russian at `/`, English at `/en/`. Texts live in `client/i18n/translations.ts`.
+- **Language detection**: a visitor's earlier choice is restored automatically; otherwise a small banner offers the other language based on the browser language (`client/i18n/detect.ts`).
+- **Prerendered HTML**: `pnpm build` renders both pages to static HTML (`scripts/prerender.mjs`), so Google sees the full text without running JavaScript.
+- **Site address**: set `SITE_URL` (e.g. `https://kolibrischool.ca`) in the hosting settings. On Vercel it falls back to the production domain automatically. It is used for canonical and hreflang links, `sitemap.xml` and `robots.txt`.
+- **School facts** (phone, address, links): `client/content/school.ts`.
+- **News cards**: `client/content/news.ts` (replaces the old Facebook widget).
+
 ## 🌐 Deployment
 
 ### Vercel Deployment (Recommended)
