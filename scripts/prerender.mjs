@@ -1,5 +1,5 @@
 /**
- * Build step 3 of 3 (see "build" in package.json).
+ * Build step 4 of 4 (see "build" in package.json).
  *
  * Turns the empty SPA shell into real HTML pages so Google sees the content
  * without running JavaScript:

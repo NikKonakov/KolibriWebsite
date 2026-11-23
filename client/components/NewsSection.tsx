@@ -2,13 +2,13 @@ import { ExternalLink, Facebook } from "lucide-react";
 import { useI18n } from "@/i18n/LanguageContext";
 import { news } from "@/content/news";
 import { school } from "@/content/school";
+import type { Lang } from "@/i18n/detect";
 
 /**
- * Replaces the Facebook Page Plugin, which broke because:
- * - it only embeds Facebook Pages, and often fails for profile.php?id= links;
- * - its SDK version (v18) has expired;
- * - Safari, Firefox and ad blockers block it by default.
- * News now lives in content/news.ts: it always loads and Google can index it.
+ * Replaces the Facebook Page Plugin, which stopped showing posts (expired SDK
+ * version, blocked by Safari/Firefox tracking protection and ad blockers).
+ * Posts are now pulled from the Page at build time (content/news.ts), so they
+ * always load and Google can index them.
  */
 export default function NewsSection() {
   const { t, lang } = useI18n();
@@ -28,11 +28,23 @@ export default function NewsSection() {
         {t.news.heading}
       </h2>
 
+      {news.length > 0 && t.news.otherLanguageNote &&
+        news.some((item) => !item.text[lang]) && (
+          <p className="-mt-2 text-xs text-brand-text">
+            {t.news.otherLanguageNote}
+          </p>
+        )}
+
       {news.length > 0 && (
         <div className="grid w-full gap-4 md:grid-cols-2">
-          {news.map((item) => (
+          {news.map((item, index) => {
+            // Facebook posts exist only in Russian; show them as they are.
+            const textLang: Lang = item.text[lang] ? lang : "ru";
+            const title = item.title?.[textLang];
+            return (
             <article
-              key={item.date + item.title.ru}
+              key={item.date + index}
+              lang={textLang !== lang ? textLang : undefined}
               className="flex flex-col overflow-hidden rounded-xl border border-black/10 bg-brand-light"
             >
               {item.image && (
@@ -50,11 +62,13 @@ export default function NewsSection() {
                 >
                   {dateFormat.format(new Date(item.date))}
                 </time>
-                <h3 className="text-base md:text-lg font-semibold text-brand-dark">
-                  {item.title[lang]}
-                </h3>
-                <p className="text-sm text-brand-dark leading-relaxed whitespace-pre-line">
-                  {item.text[lang]}
+                {title && (
+                  <h3 className="text-base md:text-lg font-semibold text-brand-dark">
+                    {title}
+                  </h3>
+                )}
+                <p className="line-clamp-6 text-sm text-brand-dark leading-relaxed whitespace-pre-line">
+                  {item.text[textLang]}
                 </p>
                 {item.link && (
                   <a
@@ -69,7 +83,8 @@ export default function NewsSection() {
                 )}
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
       )}
 

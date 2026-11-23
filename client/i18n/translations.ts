@@ -41,6 +41,8 @@ export interface Dictionary {
     followText: string;
     followButton: string;
     readMore: string;
+    /** Shown when some posts exist only in the other language. */
+    otherLanguageNote?: string;
   };
   reviews: { heading: string; note?: string; items: Review[] };
   footer: {
@@ -343,6 +345,7 @@ These aren't just classes: they help children feel Russian as part of everyday l
       "We post the latest news, event photos and announcements on our Facebook page.",
     followButton: "Open Facebook",
     readMore: "Read on Facebook",
+    otherLanguageNote: "Posts from our Facebook page are in Russian.",
   },
   reviews: {
     heading: "What parents say",

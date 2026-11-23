@@ -1,0 +1,23 @@
+# Rebuilds the site once a day so new Facebook posts appear in the News section.
+# Needs the repository secret VERCEL_DEPLOY_HOOK (README, "Facebook news").
+name: Refresh Facebook news
+
+on:
+  schedule:
+    - cron: "17 13 * * *" # every day at 13:17 UTC = 6:17 Calgary (MST)
+  workflow_dispatch: # "Run workflow" button for an instant refresh
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger a Vercel rebuild
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "VERCEL_DEPLOY_HOOK secret is not set; nothing to do."
+            exit 0
+          fi
+          curl -fsS -X POST "$HOOK" > /dev/null
+          echo "Rebuild triggered."

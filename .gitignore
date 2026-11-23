@@ -26,3 +26,7 @@ dist-ssr
 .config/
 !.env
 .vercel
+
+# Generated at build time from the Facebook Page
+client/content/news.generated.json
+public/news/fb/

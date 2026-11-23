@@ -95,7 +95,24 @@ The development server runs on port 8080 by default and includes:
 - **Prerendered HTML**: `pnpm build` renders both pages to static HTML (`scripts/prerender.mjs`), so Google sees the full text without running JavaScript.
 - **Site address**: set `SITE_URL` (e.g. `https://kolibrischool.ca`) in the hosting settings. On Vercel it falls back to the production domain automatically. It is used for canonical and hreflang links, `sitemap.xml` and `robots.txt`.
 - **School facts** (phone, address, links): `client/content/school.ts`.
-- **News cards**: `client/content/news.ts` (replaces the old Facebook widget).
+- **News cards**: pulled from the school's Facebook Page at build time (see below); optional manual news in `client/content/news.ts`.
+
+## 📰 Facebook news
+
+The News section shows the 6 latest posts from the school's Facebook Page. `scripts/fetch-facebook-news.mjs` downloads them during `pnpm build`, so they are part of the HTML that Google reads. A GitHub Action rebuilds the site every morning.
+
+One-time setup (about 30 minutes, done by someone who manages the Page):
+
+1. **Create a Meta app**: [developers.facebook.com/apps](https://developers.facebook.com/apps) → Create app → "Other" → "Business". Name it e.g. "Kolibri Website". Leave it in Development mode.
+2. **Get a short-lived token**: [Graph API Explorer](https://developers.facebook.com/tools/explorer/) → pick the app → add permissions `pages_show_list` and `pages_read_engagement` → Generate Access Token → choose the Kolibri Page.
+3. **Make it long-lived**: [Access Token Debugger](https://developers.facebook.com/tools/debug/accesstoken/) → paste the token → Debug → "Extend Access Token" → copy the new token.
+4. **Get the Page token**: back in Graph API Explorer, paste the long-lived token and run `GET me/accounts`. Copy the `access_token` of the Kolibri Page. Check it in the Access Token Debugger: "Expires" should say "Never".
+5. **Add it to Vercel**: Project → Settings → Environment Variables → `FB_PAGE_TOKEN` = the Page token (Production and Preview) → redeploy.
+6. **Daily refresh**: Vercel → Settings → Git → Deploy Hooks → create one for the production branch → copy the URL. GitHub → this repo → Settings → Secrets and variables → Actions → New secret `VERCEL_DEPLOY_HOOK` = that URL. The project must be connected to GitHub in Vercel for deploy hooks to exist.
+
+Test locally: `FB_PAGE_TOKEN=... pnpm news`, then `pnpm dev`.
+
+If the token stops working (the person who created it lost access to the Page, changed their password, or Meta reset it), the build still succeeds and the section shows only the Facebook button. The build log then says "Facebook returned an error": repeat steps 2–5.
 
 ## 🌐 Deployment
 
