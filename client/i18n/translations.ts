@@ -22,6 +22,8 @@ export interface Dictionary {
     description: string;
     ogLocale: string;
     siteName: string;
+    /** Describes /og-image.jpg, the picture shown when the link is shared. */
+    ogImageAlt: string;
   };
   langName: string;
   /** Shown on the OTHER language's page to offer this language. */
@@ -43,6 +45,7 @@ export interface Dictionary {
   featuresLabel: string;
   features: Feature[];
   programs: { heading: string; items: Program[] };
+  gallery: { heading: string; intro: string; prev: string; next: string };
   news: {
     heading: string;
     followText: string;
@@ -87,6 +90,7 @@ const ru: Dictionary = {
       "Школа «Колибри» в Калгари: русский язык для детей от 4,5 до 18 лет, РКИ для детей и взрослых, театр, музыка и библиотека. Запишитесь на пробный урок!",
     ogLocale: "ru_RU",
     siteName: "Школа «Колибри»",
+    ogImageAlt: "Ученики школы «Колибри» на сцене во время концерта",
   },
   langName: "Русский",
   languageOffer: {
@@ -196,6 +200,13 @@ const ru: Dictionary = {
       },
     ],
   },
+  gallery: {
+    heading: "Жизнь школы",
+    intro:
+      "Концерты, спектакли, клубы и уроки: как проходят будни и праздники в «Колибри».",
+    prev: "Предыдущее фото",
+    next: "Следующее фото",
+  },
   news: {
     heading: "Новости",
     followText:
@@ -265,6 +276,7 @@ const en: Dictionary = {
       "Kolibri School in Calgary, AB: Russian classes for kids aged 4.5 to 18, Russian as a foreign language for children and adults, plus theatre, music and a library. Book a trial lesson!",
     ogLocale: "en_CA",
     siteName: "Kolibri School",
+    ogImageAlt: "Kolibri students on stage at a school concert",
   },
   langName: "English",
   languageOffer: {
@@ -373,6 +385,13 @@ These aren't just classes: they help children feel Russian as part of everyday l
 • A focus on speaking practice and listening comprehension.`,
       },
     ],
+  },
+  gallery: {
+    heading: "School life",
+    intro:
+      "Concerts, plays, clubs and lessons: everyday life and celebrations at Kolibri.",
+    prev: "Previous photo",
+    next: "Next photo",
   },
   news: {
     heading: "News",

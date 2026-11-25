@@ -19,7 +19,8 @@ export function renderHead(lang: Lang, siteUrl?: string): string {
   const m = dictionaries[lang].meta;
   const abs = (path: string) => (siteUrl ? siteUrl + path : undefined);
   const url = abs(LANG_PATH[lang]);
-  const image = abs(school.logo);
+  const logo = abs(school.logo);
+  const image = abs("/og-image.jpg");
 
   const tags: string[] = [
     `<title>${esc(m.title)}</title>`,
@@ -29,7 +30,7 @@ export function renderHead(lang: Lang, siteUrl?: string): string {
     `<meta property="og:title" content="${esc(m.title)}" />`,
     `<meta property="og:description" content="${esc(m.description)}" />`,
     `<meta property="og:locale" content="${m.ogLocale}" />`,
-    `<meta name="twitter:card" content="summary" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
   ];
 
   if (siteUrl) {
@@ -43,6 +44,9 @@ export function renderHead(lang: Lang, siteUrl?: string): string {
       `<link rel="alternate" hreflang="x-default" href="${abs(LANG_PATH.en)}" />`,
       `<meta property="og:url" content="${url}" />`,
       `<meta property="og:image" content="${image}" />`,
+      `<meta property="og:image:width" content="1200" />`,
+      `<meta property="og:image:height" content="630" />`,
+      `<meta property="og:image:alt" content="${esc(m.ogImageAlt)}" />`,
     );
   }
 
@@ -53,7 +57,7 @@ export function renderHead(lang: Lang, siteUrl?: string): string {
     name: "Kolibri School",
     alternateName: ["Школа «Колибри»", "Колибри", "Kolibri Russian School"],
     description: m.description,
-    ...(siteUrl && { url: siteUrl + "/", logo: image, image }),
+    ...(siteUrl && { url: siteUrl + "/", logo, image }),
     telephone: school.phoneE164,
     email: school.email,
     address: {

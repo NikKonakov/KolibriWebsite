@@ -4,6 +4,7 @@ import WelcomeBanner from "@/components/WelcomeBanner";
 import WhyUsSection from "@/components/WhyUsSection";
 import ProgramsSection from "@/components/ProgramsSection";
 import NewsSection from "@/components/NewsSection";
+import GallerySection from "@/components/GallerySection";
 import ReviewsSection from "@/components/ReviewsSection";
 import Footer from "@/components/Footer";
 import LanguageSuggestion from "@/components/LanguageSuggestion";
@@ -38,6 +39,7 @@ export default function Index({ lang }: { lang: Lang }) {
             <WelcomeBanner />
             <WhyUsSection />
             <ProgramsSection />
+            <GallerySection />
             <NewsSection />
             <ReviewsSection />
           </main>
