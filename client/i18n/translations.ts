@@ -32,7 +32,14 @@ export interface Dictionary {
     logoAlt: string;
     nav: { programs: string; news: string; library: string };
   };
-  welcome: { title: string; text: string; cta: string; dialogTitle: string };
+  welcome: {
+    title: string;
+    text: string;
+    /** Key facts under the welcome text: schedule, ages, adult classes. */
+    facts: { schedule: string; ages: string; foreignLanguage: string };
+    cta: string;
+    dialogTitle: string;
+  };
   featuresLabel: string;
   features: Feature[];
   programs: { heading: string; items: Program[] };
@@ -75,9 +82,9 @@ const reviewLinks = {
 
 const ru: Dictionary = {
   meta: {
-    title: "Колибри (Kolibri) — школа русского языка для детей в Калгари",
+    title: "Колибри (Kolibri) — школа русского языка в Калгари для детей и взрослых",
     description:
-      "Школа «Колибри» в Калгари: русский язык для детей всех уровней, включая РКИ, а также театр, музыка, библиотека и книжный клуб. Запишитесь на пробный урок!",
+      "Школа «Колибри» в Калгари: русский язык для детей от 4,5 до 18 лет, РКИ для детей и взрослых, театр, музыка и библиотека. Запишитесь на пробный урок!",
     ogLocale: "ru_RU",
     siteName: "Школа «Колибри»",
   },
@@ -96,6 +103,12 @@ const ru: Dictionary = {
   welcome: {
     title: "Добро пожаловать в школу «Колибри»",
     text: "Мы создаём пространство, где обучение русскому языку становится не только полезным, но и увлекательным путешествием в мир знаний, культуры и творчества.",
+    facts: {
+      schedule: "По субботам с 9:00 до 16:00, по будням — вечерние занятия",
+      ages: "Детские группы — от 4,5 до 18 лет",
+      foreignLanguage:
+        "Русский как иностранный — для детей и взрослых, без возрастных ограничений",
+    },
     cta: "Запишитесь на пробный урок!",
     dialogTitle: "Контактные данные",
   },
@@ -134,7 +147,7 @@ const ru: Dictionary = {
         title: "Уроки в классе",
         content: `Мы понимаем, что у каждого ребёнка свои цели и интересы, поэтому предлагаем разные направления обучения:
 
-• Русский как иностранный (РКИ) — для тех, кто делает первые шаги в языке.
+• Русский как иностранный (РКИ) — для детей и взрослых, которые делают первые шаги в языке. Без возрастных ограничений.
 • Углублённое изучение — для детей, уже владеющих русским и желающих совершенствоваться.
 • Творческая программа — интересные и яркие проекты.
 • 🎶 Концерты и сценические выступления — дети выходят на сцену, учатся уверенности и раскрывают свои таланты.`,
@@ -149,6 +162,10 @@ const ru: Dictionary = {
 • Детективное агентство 🕵️‍♂️
 • Театр у микрофона 🎤
 • 🌍 Практика языка в реальных ситуациях
+• Большие школьные концерты 🎶
+• Поэтические вечера «Стихи с чаем» ☕
+• Тематические курсы — например, «Мастер истории» 📜
+• Скоро: новый театральный курс для младших детей 🎭
 
 Это не просто занятия — это возможность почувствовать русский язык частью жизни.`,
       },
@@ -173,7 +190,7 @@ const ru: Dictionary = {
 • Учащиеся готовят творческие проекты и участвуют в концертах и театральных постановках.
 
 🔹 4. Уровень «РКИ» (русский как иностранный)
-• Специальная программа для детей, не говорящих по-русски.
+• Специальная программа для детей и взрослых, не говорящих по-русски. Без возрастных ограничений.
 • Постепенное погружение в язык через игры и интерактивные методы.
 • Акцент на разговорную практику и понимание на слух.`,
       },
@@ -243,9 +260,9 @@ const ru: Dictionary = {
 
 const en: Dictionary = {
   meta: {
-    title: "Kolibri — Russian Language School for Kids in Calgary",
+    title: "Kolibri — Russian Language School in Calgary for Kids and Adults",
     description:
-      "Kolibri School in Calgary, AB: Russian classes for children at every level, including Russian as a foreign language, plus theatre, music, a library and a book club. Book a trial lesson!",
+      "Kolibri School in Calgary, AB: Russian classes for kids aged 4.5 to 18, Russian as a foreign language for children and adults, plus theatre, music and a library. Book a trial lesson!",
     ogLocale: "en_CA",
     siteName: "Kolibri School",
   },
@@ -264,6 +281,12 @@ const en: Dictionary = {
   welcome: {
     title: "Welcome to Kolibri School",
     text: "We create a space where learning Russian is not only useful but also an exciting journey into the world of knowledge, culture and creativity.",
+    facts: {
+      schedule: "Saturdays 9:00–16:00, plus weekday evening classes",
+      ages: "Children's groups for ages 4.5 to 18",
+      foreignLanguage:
+        "Russian as a foreign language for children and adults of any age",
+    },
     cta: "Book a trial lesson!",
     dialogTitle: "Contact us",
   },
@@ -302,7 +325,7 @@ const en: Dictionary = {
         title: "Classroom lessons",
         content: `Every child has their own goals and interests, so we offer several learning tracks:
 
-• Russian as a foreign language (RFL) — for children taking their first steps in Russian.
+• Russian as a foreign language (RFL) — for children and adults taking their first steps in Russian, with no age limits.
 • Advanced study — for children who already speak Russian and want to improve.
 • Creative program — fun, colourful projects.
 • 🎶 Concerts and stage performances — children go on stage, build confidence and discover their talents.`,
@@ -317,6 +340,10 @@ const en: Dictionary = {
 • Detective agency 🕵️‍♂️
 • Radio theatre 🎤
 • 🌍 Practising Russian in real-life situations
+• Big school concerts 🎶
+• Poetry evenings over tea ☕
+• Themed courses, such as "History Master" 📜
+• Coming soon: a new theatre course for younger children 🎭
 
 These aren't just classes: they help children feel Russian as part of everyday life.`,
       },
@@ -341,7 +368,7 @@ These aren't just classes: they help children feel Russian as part of everyday l
 • Students prepare creative projects and take part in concerts and theatre productions.
 
 🔹 4. Russian as a foreign language (RFL)
-• A special program for children who don't speak Russian.
+• A special program for children and adults who don't speak Russian. No age limits.
 • Gradual immersion through games and interactive methods.
 • A focus on speaking practice and listening comprehension.`,
       },

@@ -5,7 +5,15 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Facebook, Instagram, Mail, Phone } from "lucide-react";
+import {
+  CalendarDays,
+  Facebook,
+  Globe,
+  Instagram,
+  Mail,
+  Phone,
+  Users,
+} from "lucide-react";
 import { useI18n } from "@/i18n/LanguageContext";
 import { school } from "@/content/school";
 
@@ -26,6 +34,21 @@ export default function WelcomeBanner() {
         <p className="text-sm md:text-lg text-brand-dark text-center font-normal leading-relaxed">
           {t.welcome.text}
         </p>
+        <ul className="flex w-full max-w-xl flex-col gap-2 rounded-lg bg-brand-light p-3 text-sm md:text-base text-brand-dark">
+          {[
+            { Icon: CalendarDays, text: t.welcome.facts.schedule },
+            { Icon: Users, text: t.welcome.facts.ages },
+            { Icon: Globe, text: t.welcome.facts.foreignLanguage },
+          ].map(({ Icon, text }) => (
+            <li key={text} className="flex items-start gap-3">
+              <Icon
+                className="mt-0.5 h-5 w-5 shrink-0 text-amber-600"
+                aria-hidden="true"
+              />
+              <span>{text}</span>
+            </li>
+          ))}
+        </ul>
         <button
           onClick={() => setIsOpen(true)}
           className="px-6 py-3 bg-brand-orange rounded-md text-white text-base md:text-lg font-medium hover:bg-brand-orange/90 transition-colors"
