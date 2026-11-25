@@ -24,8 +24,12 @@ dist-ssr
 *.sw?
 
 .config/
-!.env
 .vercel
+
+# Local settings and secrets (tokens!) stay on your machine; see .env.example
+.env
+.env.*
+!.env.example
 
 # Generated at build time from the Facebook Page
 client/content/news.generated.json

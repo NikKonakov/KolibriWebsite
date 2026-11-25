@@ -1,40 +1,45 @@
+/**
+ * Self-hosted production server: `pnpm build && pnpm build:server && pnpm start`.
+ * Not used on Vercel (which serves dist/spa directly); kept for hosting the
+ * site on any Node.js machine.
+ */
 import path from "path";
-import { createServer } from "./index";
 import * as express from "express";
+import { createServer } from "./index";
+import { securityHeaders } from "../shared/security-headers";
 
 const app = createServer();
 const port = process.env.PORT || 3000;
+const distPath = path.join(import.meta.dirname, "../spa");
 
-// In production, serve the built SPA files
-const __dirname = import.meta.dirname;
-const distPath = path.join(__dirname, "../spa");
+// Same security headers as production on Vercel (see shared/security-headers.ts).
+app.use((_req, res, next) => {
+  res.set(securityHeaders);
+  next();
+});
 
-// Serve static files
+// Prerendered pages and assets: "/" → index.html, "/en/" → en/index.html.
 app.use(express.static(distPath));
 
-// "/" and "/en/" are prerendered files served by express.static above.
-// Anything else is a real 404 (a 200 here would be a "soft 404" for Google).
-app.get("*", (req, res) => {
-  if (req.path.startsWith("/api/") || req.path.startsWith("/health")) {
-    return res.status(404).json({ error: "API endpoint not found" });
+// Everything else is a real 404 with the not-found page. (Answering 200 with
+// the home page would be a "soft 404", which Google penalises.) A final
+// middleware is used instead of app.get("*"): Express 5 rejects the bare "*".
+app.use((req, res) => {
+  if (req.path.startsWith("/api/")) {
+    res.status(404).json({ error: "API endpoint not found" });
+    return;
   }
-
   res.status(404).sendFile(path.join(distPath, "404.html"));
 });
 
 app.listen(port, () => {
-  console.log(`🚀 Fusion Starter server running on port ${port}`);
-  console.log(`📱 Frontend: http://localhost:${port}`);
-  console.log(`🔧 API: http://localhost:${port}/api`);
+  console.log(`Kolibri website running on http://localhost:${port}`);
 });
 
-// Graceful shutdown
-process.on("SIGTERM", () => {
-  console.log("🛑 Received SIGTERM, shutting down gracefully");
+/** Exits cleanly when the hosting platform asks the process to stop. */
+function shutDown(signal: string) {
+  console.log(`Received ${signal}, shutting down`);
   process.exit(0);
-});
-
-process.on("SIGINT", () => {
-  console.log("🛑 Received SIGINT, shutting down gracefully");
-  process.exit(0);
-});
+}
+process.on("SIGTERM", () => shutDown("SIGTERM"));
+process.on("SIGINT", () => shutDown("SIGINT"));

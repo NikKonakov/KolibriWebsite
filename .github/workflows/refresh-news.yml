@@ -7,9 +7,13 @@ on:
     - cron: "17 13 * * *" # every day at 13:17 UTC = 6:17 Calgary (MST)
   workflow_dispatch: # "Run workflow" button for an instant refresh
 
+# The job only calls a URL: it needs no access to the repository itself.
+permissions: {}
+
 jobs:
   redeploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Trigger a Vercel rebuild
         env:
