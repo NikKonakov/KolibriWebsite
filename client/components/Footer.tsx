@@ -52,6 +52,15 @@ export default function Footer() {
               {a.unit}
               <br />
               {a.city}, {a.region} {a.postalCode}
+              <br />
+              <a
+                href={school.google}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block pt-1 text-brand-orange underline-offset-4 hover:underline"
+              >
+                {t.footer.mapLink} →
+              </a>
             </p>
           </address>
         </div>

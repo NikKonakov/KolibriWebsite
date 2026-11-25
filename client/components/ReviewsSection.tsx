@@ -1,5 +1,6 @@
 import ReviewCard from "./ReviewCard";
 import { useI18n } from "@/i18n/LanguageContext";
+import { school } from "@/content/school";
 
 const gradients = [
   "from-brand-orange to-amber-400",
@@ -31,6 +32,14 @@ export default function ReviewsSection() {
           />
         ))}
       </div>
+      <a
+        href={school.google}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-sm md:text-base font-medium text-blue-700 underline-offset-4 hover:underline"
+      >
+        {t.reviews.googleLink} →
+      </a>
     </section>
   );
 }

@@ -17,6 +17,8 @@ export const school = {
     country: "CA",
   },
   facebook: "https://www.facebook.com/profile.php?id=100023570652523",
+  /** The school's Google Business Profile (map, directions, reviews). */
+  google: "https://share.google/T9zxHCx3SHUTZM9sc",
   /** Leave empty until the school has a real Instagram account; the icon is hidden while empty. */
   instagram: "",
   library: "https://www.libib.com/u/kolibrischool",

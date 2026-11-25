@@ -44,7 +44,12 @@ export interface Dictionary {
     /** Shown when some posts exist only in the other language. */
     otherLanguageNote?: string;
   };
-  reviews: { heading: string; note?: string; items: Review[] };
+  reviews: {
+    heading: string;
+    note?: string;
+    googleLink: string;
+    items: Review[];
+  };
   footer: {
     aboutTitle: string;
     aboutText: string;
@@ -52,6 +57,7 @@ export interface Dictionary {
     phone: string;
     email: string;
     address: string;
+    mapLink: string;
     socialTitle: string;
     schoolName: string;
     rights: string;
@@ -182,6 +188,7 @@ const ru: Dictionary = {
   },
   reviews: {
     heading: "Отзывы о школе",
+    googleLink: "Все отзывы о нас в Google",
     items: [
       {
         name: "Jyldyz Oskoeva",
@@ -222,6 +229,7 @@ const ru: Dictionary = {
     phone: "Телефон",
     email: "Email",
     address: "Адрес",
+    mapLink: "Открыть на карте",
     socialTitle: "Соцсети",
     schoolName: "Школа «Колибри»",
     rights: "Все права защищены.",
@@ -350,6 +358,7 @@ These aren't just classes: they help children feel Russian as part of everyday l
   reviews: {
     heading: "What parents say",
     note: "Translated from Russian",
+    googleLink: "All our reviews on Google",
     items: [
       {
         name: "Jyldyz Oskoeva",
@@ -390,6 +399,7 @@ These aren't just classes: they help children feel Russian as part of everyday l
     phone: "Phone",
     email: "Email",
     address: "Address",
+    mapLink: "Open on the map",
     socialTitle: "Follow us",
     schoolName: "Kolibri School",
     rights: "All rights reserved.",
