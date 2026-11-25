@@ -1,10 +1,20 @@
 import { Facebook, Instagram } from "lucide-react";
+import ExternalLink from "./ExternalLink";
 import { useI18n } from "@/i18n/LanguageContext";
 import { school } from "@/content/school";
 
-/** Set at build time so the prerendered HTML and the browser agree. */
+/** Copyright year, fixed at build time so prerendered HTML and browser agree. */
 const YEAR = __BUILD_YEAR__;
 
+const columnClass = "flex flex-col items-start gap-3 w-full md:w-1/3";
+const headingClass = "text-xl md:text-2xl text-brand-orange font-semibold mb-1";
+const socialIconClass =
+  "w-10 h-10 rounded-full flex items-center justify-center";
+
+/**
+ * Dark page footer in three columns: about the school, contacts (phone,
+ * email, address with a map link) and social networks; then the copyright.
+ */
 export default function Footer() {
   const { t } = useI18n();
   const a = school.address;
@@ -12,19 +22,15 @@ export default function Footer() {
   return (
     <footer className="w-full bg-brand-dark py-12">
       <div className="max-w-[345px] lg:max-w-4xl mx-auto px-4 flex flex-col md:flex-row items-start justify-between gap-8 md:gap-12">
-        <div className="flex flex-col items-start gap-3 w-full md:w-1/3">
-          <h2 className="text-xl md:text-2xl text-brand-orange font-semibold mb-1">
-            {t.footer.aboutTitle}
-          </h2>
+        <div className={columnClass}>
+          <h2 className={headingClass}>{t.footer.aboutTitle}</h2>
           <p className="text-sm md:text-base text-white font-normal leading-relaxed">
             {t.footer.aboutText}
           </p>
         </div>
 
-        <div className="flex flex-col items-start gap-3 w-full md:w-1/3">
-          <h2 className="text-xl md:text-2xl text-brand-orange font-semibold mb-1">
-            {t.footer.contactsTitle}
-          </h2>
+        <div className={columnClass}>
+          <h2 className={headingClass}>{t.footer.contactsTitle}</h2>
           <address className="flex flex-col gap-2 text-sm md:text-base text-white font-normal not-italic">
             <p>
               📞 {t.footer.phone}:{" "}
@@ -53,46 +59,40 @@ export default function Footer() {
               <br />
               {a.city}, {a.region} {a.postalCode}
               <br />
-              <a
+              <ExternalLink
                 href={school.google}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="inline-block pt-1 text-brand-orange underline-offset-4 hover:underline"
               >
                 {t.footer.mapLink} →
-              </a>
+              </ExternalLink>
             </p>
           </address>
         </div>
 
-        <div className="flex flex-col items-start gap-3 w-full md:w-1/3">
-          <h2 className="text-xl md:text-2xl text-brand-orange font-semibold mb-1">
-            {t.footer.socialTitle}
-          </h2>
+        <div className={columnClass}>
+          <h2 className={headingClass}>{t.footer.socialTitle}</h2>
           <div className="flex items-center gap-4 py-1">
-            <a
+            <ExternalLink
               href={school.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
               className="hover:scale-110 transition-transform"
               aria-label="Facebook"
             >
-              <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">
+              <div className={`${socialIconClass} bg-blue-600`}>
                 <Facebook className="w-6 h-6 text-white" />
               </div>
-            </a>
+            </ExternalLink>
             {school.instagram && (
-              <a
+              <ExternalLink
                 href={school.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="hover:scale-110 transition-transform"
                 aria-label="Instagram"
               >
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 flex items-center justify-center">
+                <div
+                  className={`${socialIconClass} bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500`}
+                >
                   <Instagram className="w-6 h-6 text-white" />
                 </div>
-              </a>
+              </ExternalLink>
             )}
           </div>
         </div>

@@ -1,5 +1,11 @@
+/**
+ * Language basics: the two site languages, their URLs, and how the visitor's
+ * preferred language is detected and remembered.
+ */
+
 export type Lang = "ru" | "en";
 
+/** Every language the site is published in, in menu order. */
 export const LANGS: Lang[] = ["ru", "en"];
 
 /** URL path of each language version. */
@@ -14,6 +20,7 @@ export const LANG_STORAGE_KEY = "kolibri-lang";
  */
 const READS_RUSSIAN = ["ru", "uk", "be", "kk", "ky", "uz", "tg"];
 
+/** Language part of a browser language tag: "en-CA" → "en", "ru_RU" → "ru". */
 const baseCode = (tag: string) => tag.toLowerCase().split(/[-_]/)[0];
 
 /**
@@ -38,6 +45,11 @@ export function suggestLanguage(
   return READS_RUSSIAN.includes(codes[0]) ? "ru" : null;
 }
 
+/**
+ * The language the visitor picked earlier with the RU/EN switcher, or null.
+ * Anything other than "ru"/"en" in storage is ignored, and private browsing
+ * modes that block storage simply return null.
+ */
 export function readStoredLang(): Lang | null {
   try {
     const v = window.localStorage.getItem(LANG_STORAGE_KEY);
@@ -47,6 +59,7 @@ export function readStoredLang(): Lang | null {
   }
 }
 
+/** Remembers the visitor's language choice in this browser. */
 export function storeLang(lang: Lang) {
   try {
     window.localStorage.setItem(LANG_STORAGE_KEY, lang);

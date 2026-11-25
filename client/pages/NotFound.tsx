@@ -1,6 +1,11 @@
 import { dictionaries } from "@/i18n/translations";
 
-const NotFound = () => {
+/**
+ * 404 page for unknown addresses. It's shown in both languages at once,
+ * because a wrong address says nothing about the visitor's language.
+ * Hosting returns it with a real 404 status (vercel.json, node-build.ts).
+ */
+export default function NotFound() {
   const { ru, en } = dictionaries;
 
   return (
@@ -26,6 +31,4 @@ const NotFound = () => {
       </div>
     </div>
   );
-};
-
-export default NotFound;
+}

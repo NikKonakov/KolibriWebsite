@@ -1,3 +1,8 @@
+/**
+ * Every visible text of the site in Russian and English.
+ * `Dictionary` describes the shape; TypeScript reports a missing or extra
+ * text in either language, so the two versions can't drift apart.
+ */
 import type { Lang } from "./detect";
 
 export interface Feature {
@@ -85,7 +90,8 @@ const reviewLinks = {
 
 const ru: Dictionary = {
   meta: {
-    title: "Колибри (Kolibri) — школа русского языка в Калгари для детей и взрослых",
+    title:
+      "Колибри (Kolibri) — школа русского языка в Калгари для детей и взрослых",
     description:
       "Школа «Колибри» в Калгари: русский язык для детей от 4,5 до 18 лет, РКИ для детей и взрослых, театр, музыка и библиотека. Запишитесь на пробный урок!",
     ogLocale: "ru_RU",
@@ -100,7 +106,8 @@ const ru: Dictionary = {
   },
   header: {
     brand: "Колибри",
-    tagline: "Школа русского языка · Театр · Библиотека · Музыка · Книжный клуб",
+    tagline:
+      "Школа русского языка · Театр · Библиотека · Музыка · Книжный клуб",
     logoAlt: "Логотип школы «Колибри»",
     nav: { programs: "Программы", news: "Новости", library: "Библиотека" },
   },

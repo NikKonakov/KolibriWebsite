@@ -1,9 +1,12 @@
+import type { ReactNode } from "react";
+
 interface FeatureCardProps {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   description: string;
 }
 
+/** One card in the "Why Kolibri" row: round icon, title and a short text. */
 export default function FeatureCard({
   icon,
   title,

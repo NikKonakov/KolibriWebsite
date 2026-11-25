@@ -3,7 +3,11 @@ import { useI18n } from "@/i18n/LanguageContext";
 import { LANGS, LANG_PATH, storeLang } from "@/i18n/detect";
 
 /** RU | EN toggle. Plain links, so each language is its own crawlable page. */
-export default function LanguageSwitcher({ className }: { className?: string }) {
+export default function LanguageSwitcher({
+  className,
+}: {
+  className?: string;
+}) {
   const { lang } = useI18n();
 
   return (

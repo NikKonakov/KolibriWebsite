@@ -2,6 +2,10 @@ import { dictionaries } from "@/i18n/translations";
 import { LANG_PATH, LANGS, type Lang } from "@/i18n/detect";
 import { school } from "@/content/school";
 
+/**
+ * Escapes text for use inside an HTML attribute (title, description, …),
+ * so a quote or "<" in a translation can't break or inject markup.
+ */
 const esc = (s: string) =>
   s
     .replace(/&/g, "&amp;")
@@ -17,6 +21,7 @@ const esc = (s: string) =>
  */
 export function renderHead(lang: Lang, siteUrl?: string): string {
   const m = dictionaries[lang].meta;
+  /** Absolute URL of a path on this site, or undefined without a site URL. */
   const abs = (path: string) => (siteUrl ? siteUrl + path : undefined);
   const url = abs(LANG_PATH[lang]);
   const logo = abs(school.logo);
@@ -73,6 +78,7 @@ export function renderHead(lang: Lang, siteUrl?: string): string {
     sameAs: [school.facebook, school.instagram].filter(Boolean),
   };
 
+  // "<" is escaped so text inside the JSON can never close the <script> tag.
   tags.push(
     `<script type="application/ld+json">${JSON.stringify(structuredData).replace(/</g, "\\u003c")}</script>`,
   );

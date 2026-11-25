@@ -18,7 +18,7 @@ This website was **designed and migrated to code** to provide an engaging online
 ## 🛠️ Tech Stack
 
 - **Frontend**: React 18 + TypeScript + Vite
-- **Styling**: TailwindCSS 3 + Radix UI components
+- **Styling**: TailwindCSS 3, one Radix UI component (dialog), self-hosted fonts
 - **Routing**: React Router 6 (SPA mode)
 - **Backend**: Express.js server
 - **Package Manager**: pnpm
@@ -27,16 +27,27 @@ This website was **designed and migrated to code** to provide an engaging online
 ## 📂 Project Structure
 
 ```
-client/               # React frontend
-├── components/       # Reusable React components
-├── pages/           # Route pages
-└── lib/             # Utility functions
+client/                  # React website
+├── App.tsx              # Browser entry: styles, fonts, hydration
+├── AppRoutes.tsx        # Routes: / (ru), /en (en), 404
+├── entry-server.tsx     # Build-time prerender entry
+├── pages/               # Index (home page), NotFound
+├── components/          # Page sections; ExternalLink and SectionCard helpers
+│   └── ui/dialog.tsx    # The only shadcn/ui component in use
+├── content/             # School facts, gallery photos, news
+├── i18n/                # Russian/English texts and language detection
+├── seo/head.ts          # <head> tags and structured data per language
+└── lib/utils.ts         # cn() class-name helper
 
-server/              # Express backend
-├── routes/          # API endpoints
-└── index.ts         # Server configuration
+scripts/                 # Build steps (Node.js)
+├── fetch-facebook-news.mjs  # Step 1: posts from the Facebook Page
+├── prerender.mjs        # Step 4: static HTML, robots.txt, sitemap.xml
+└── lib/                 # Pure, unit-tested helpers for both
 
-shared/              # Shared TypeScript types
+server/                  # Optional Express server (dev middleware, self-hosting)
+shared/                  # Code shared by client, server and configs
+├── api.ts               # API response types
+└── security-headers.ts  # HTTP security headers (mirrored in vercel.json)
 ```
 
 ## 🚀 Getting Started
@@ -73,10 +84,23 @@ The development server runs on port 8080 by default and includes:
 ### Available Scripts
 
 - `pnpm dev` - Start development server (client + server)
-- `pnpm build` - Create production build
-- `pnpm start` - Run production server
-- `pnpm typecheck` - Run TypeScript validation
-- `pnpm test` - Run test suite
+- `pnpm build` - Production build: Facebook news → client bundle → SSR bundle → prerendered pages
+- `pnpm news` - Only fetch Facebook news (needs `FB_PAGE_TOKEN`)
+- `pnpm build:server` + `pnpm start` - Optional self-hosted Node.js server
+- `pnpm typecheck` - TypeScript validation (strict mode)
+- `pnpm test` - Unit tests (Vitest)
+
+After `pnpm build`, run `npx vite preview` to test the production build locally with the same security headers as Vercel.
+
+## 🔒 Security
+
+- **Secrets**: real values live only in Vercel's Environment Variables or a local `.env`, which git ignores. `.env.example` lists every setting. Never commit tokens.
+- **Facebook token**: read at build time only, sent in a request header (never in a URL or log), never included in the website bundle.
+- **HTTP security headers** (`shared/security-headers.ts`, mirrored in `vercel.json`): a strict Content Security Policy (scripts, styles, images and fonts only from this site), clickjacking protection, `nosniff`, a strict referrer policy and disabled browser permissions. A unit test fails if the two copies differ.
+- **No third-party requests**: fonts are self-hosted, the Facebook SDK is gone, news photos are downloaded at build time.
+- **External links** go through `ExternalLink`, which always adds `rel="noopener noreferrer"`.
+- **Data from Facebook** is validated: only https links, image files under 5 MB with digit-only names, timeouts on every request.
+- **Dependencies**: only packages the site uses (24, down from 79); check with `pnpm audit`. pnpm doesn't run dependency install scripts unless approved.
 
 ## 🎯 Key Sections
 
@@ -194,9 +218,8 @@ vercel env add <NAME>
 
 The project includes:
 
-- `vercel.json` - Vercel configuration file
+- `vercel.json` - build, routes (/en redirect, real 404s), security and cache headers
 - `.vercelignore` - Files to exclude from deployment
-- `api/` folder - Serverless functions for API endpoints
 
 #### Environment Variables
 

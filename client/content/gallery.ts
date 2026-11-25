@@ -126,5 +126,8 @@ export const gallery: Photo[] = [
   },
 ];
 
+/** Address of the full-size photo, shown in the pop-up. */
 export const photoSrc = (p: Photo) => `/gallery/${p.name}.webp`;
+
+/** Address of the 600×600 square thumbnail, shown in the grid. */
 export const thumbSrc = (p: Photo) => `/gallery/${p.name}-thumb.webp`;

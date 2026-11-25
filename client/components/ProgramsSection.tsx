@@ -1,24 +1,26 @@
 import { ChevronDown } from "lucide-react";
+import SectionCard from "./SectionCard";
 import { useI18n } from "@/i18n/LanguageContext";
 
 /**
- * Uses native <details> instead of a JS accordion: the text of closed items
- * stays in the HTML, so Google indexes the full program descriptions.
+ * "Our programs": classroom lessons, activities and class levels as
+ * expandable items.
+ *
+ * Uses the browser's native <details> element instead of a JavaScript
+ * accordion: the text of closed items stays in the HTML, so Google indexes
+ * the full program descriptions, and it works even without JavaScript.
  */
 export default function ProgramsSection() {
   const { t } = useI18n();
 
   return (
-    <section
-      id="programs"
-      className="w-full max-w-[345px] lg:max-w-4xl mx-auto p-4 flex flex-col items-center gap-4 rounded-xl border border-black/25 bg-white scroll-mt-20"
-    >
+    <SectionCard id="programs" className="p-4 flex flex-col items-center gap-4">
       <h2 className="text-xl md:text-2xl text-brand-dark text-center font-medium">
         {t.programs.heading}
       </h2>
       <div className="w-full">
-        {t.programs.items.map((program, index) => (
-          <details key={index} className="group border-b">
+        {t.programs.items.map((program) => (
+          <details key={program.title} className="group border-b">
             <summary className="flex cursor-pointer list-none items-center justify-between py-4 text-base md:text-lg text-brand-dark font-medium hover:underline [&::-webkit-details-marker]:hidden">
               <h3>{program.title}</h3>
               <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" />
@@ -29,6 +31,6 @@ export default function ProgramsSection() {
           </details>
         ))}
       </div>
-    </section>
+    </SectionCard>
   );
 }

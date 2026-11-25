@@ -1,24 +1,27 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import SectionCard from "./SectionCard";
 import { useI18n } from "@/i18n/LanguageContext";
 import { gallery, photoSrc, thumbSrc } from "@/content/gallery";
 
-/** "School life" photo grid; a tap opens the photo full size. */
+/**
+ * "School life": a grid of square photo thumbnails. Tapping one opens it
+ * full size in a pop-up with previous/next buttons; the arrow keys work too.
+ */
 export default function GallerySection() {
   const { t, lang } = useI18n();
+  /** Position of the photo open in the pop-up, or null when it's closed. */
   const [index, setIndex] = useState<number | null>(null);
   const count = gallery.length;
   const current = index === null ? null : gallery[index];
 
+  /** Moves to the previous (-1) or next (+1) photo, wrapping around the ends. */
   const step = (delta: number) =>
     setIndex((i) => (i === null ? i : (i + delta + count) % count));
 
   return (
-    <section
-      id="gallery"
-      className="w-full max-w-[345px] lg:max-w-4xl mx-auto p-4 flex flex-col items-center gap-4 rounded-xl border border-black/25 bg-white scroll-mt-20"
-    >
+    <SectionCard id="gallery" className="p-4 flex flex-col items-center gap-4">
       <div className="flex flex-col items-center gap-1 text-center">
         <h2 className="text-xl md:text-2xl text-brand-dark font-medium">
           {t.gallery.heading}
@@ -56,13 +59,13 @@ export default function GallerySection() {
         <DialogContent
           aria-describedby={undefined}
           className="w-[calc(100%-2rem)] max-w-4xl gap-3 p-3 sm:p-4"
-          onKeyDown={(e) => {
-            if (e.key === "ArrowLeft") step(-1);
-            if (e.key === "ArrowRight") step(1);
+          onKeyDown={(event) => {
+            if (event.key === "ArrowLeft") step(-1);
+            if (event.key === "ArrowRight") step(1);
           }}
         >
           <DialogTitle className="sr-only">{t.gallery.heading}</DialogTitle>
-          {current && (
+          {current && index !== null && (
             <>
               <img
                 src={photoSrc(current)}
@@ -84,7 +87,7 @@ export default function GallerySection() {
                   {current.alt[lang]}
                   <span className="text-brand-text">
                     {" "}
-                    · {index! + 1} / {count}
+                    · {index + 1} / {count}
                   </span>
                 </p>
                 <button
@@ -100,6 +103,6 @@ export default function GallerySection() {
           )}
         </DialogContent>
       </Dialog>
-    </section>
+    </SectionCard>
   );
 }
