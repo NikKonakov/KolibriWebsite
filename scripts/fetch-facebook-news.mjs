@@ -62,18 +62,17 @@ async function main() {
   const url = new URL(`${graphBase}/me/posts`);
   url.searchParams.set("fields", "message,created_time,full_picture,permalink_url");
   url.searchParams.set("limit", "20");
-  url.searchParams.set("access_token", token);
 
   let body;
   try {
-    const res = await fetch(url);
+    // The token goes in a header, never in the URL, so it can't leak into logs.
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
     body = await res.json();
   } catch (err) {
     console.warn(`WARNING: could not reach Facebook (${err.message}). Building without Facebook news.`);
     return writeNews([]);
   }
   if (body.error || !Array.isArray(body.data)) {
-    // Never print the URL: it contains the token.
     const e = body.error || {};
     console.warn(
       `WARNING: Facebook returned an error (${e.type || "unknown"} ${e.code ?? ""}: ${e.message || "no data"}). ` +
