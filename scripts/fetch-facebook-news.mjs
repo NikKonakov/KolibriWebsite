@@ -24,6 +24,27 @@ const MAX_TEXT = 600;
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 const IMAGE_EXT = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/gif": "gif" };
 
+const CALGARY_DATE = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "America/Edmonton",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+
+/** Facebook sends UTC ("2026-11-23T01:01:23+0000"); show the school's local day. */
+function localDate(fbTime) {
+  return CALGARY_DATE.format(new Date(fbTime.replace(/([+-]\d{2})(\d{2})$/, "$1:$2")));
+}
+
+/** Posts usually open with a short headline line: use it as the card title. */
+function splitTitle(message) {
+  const [first, ...rest] = message.split("\n");
+  const body = rest.join("\n").trim();
+  return first.trim().length <= 100 && body
+    ? { title: first.trim(), text: body }
+    : { text: message };
+}
+
 async function writeNews(items) {
   await fs.writeFile(outJson, JSON.stringify(items, null, 2) + "\n");
 }
@@ -85,9 +106,13 @@ async function main() {
   const items = [];
   for (const post of posts) {
     const id = String(post.id).replace(/[^0-9_]/g, "");
+    // Blank lines between paragraphs waste space in a short card.
+    const message = post.message.trim().replace(/\n\s*\n+/g, "\n");
+    const { title, text } = splitTitle(message);
     items.push({
-      date: post.created_time.slice(0, 10),
-      text: { ru: shorten(post.message.trim()) },
+      date: localDate(post.created_time),
+      ...(title && { title: { ru: title } }),
+      text: { ru: shorten(text) },
       image: post.full_picture ? await downloadImage(post.full_picture, id) : undefined,
       link: post.permalink_url,
     });
