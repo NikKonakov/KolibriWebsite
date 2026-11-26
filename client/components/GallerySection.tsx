@@ -58,6 +58,7 @@ export default function GallerySection() {
       >
         <DialogContent
           aria-describedby={undefined}
+          closeLabel={t.closeLabel}
           className="w-[calc(100%-2rem)] max-w-4xl gap-3 p-3 sm:p-4"
           onKeyDown={(event) => {
             if (event.key === "ArrowLeft") step(-1);

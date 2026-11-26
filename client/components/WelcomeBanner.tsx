@@ -88,7 +88,10 @@ function ContactDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md border-2 border-brand-orange/20">
+      <DialogContent
+        closeLabel={t.closeLabel}
+        className="sm:max-w-md border-2 border-brand-orange/20"
+      >
         <DialogHeader>
           <DialogTitle className="text-center text-2xl text-brand-dark font-semibold pb-2">
             {t.welcome.dialogTitle}

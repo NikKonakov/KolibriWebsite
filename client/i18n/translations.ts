@@ -31,6 +31,8 @@ export interface Dictionary {
     ogImageAlt: string;
   };
   langName: string;
+  /** Screen-reader label of the × button that closes pop-ups. */
+  closeLabel: string;
   /** Shown on the OTHER language's page to offer this language. */
   languageOffer: { text: string; action: string; close: string };
   header: {
@@ -99,6 +101,7 @@ const ru: Dictionary = {
     ogImageAlt: "Ученики школы «Колибри» на сцене во время концерта",
   },
   langName: "Русский",
+  closeLabel: "Закрыть",
   languageOffer: {
     text: "Эта страница есть на русском языке.",
     action: "Перейти на русский",
@@ -286,6 +289,7 @@ const en: Dictionary = {
     ogImageAlt: "Kolibri students on stage at a school concert",
   },
   langName: "English",
+  closeLabel: "Close",
   languageOffer: {
     text: "This page is also available in English.",
     action: "Switch to English",
@@ -301,7 +305,7 @@ const en: Dictionary = {
     title: "Welcome to Kolibri School",
     text: "We create a space where learning Russian is not only useful but also an exciting journey into the world of knowledge, culture and creativity.",
     facts: {
-      schedule: "Saturdays 9:00–16:00, plus weekday evening classes",
+      schedule: "Saturdays 9 a.m. to 4 p.m., plus weekday evening classes",
       ages: "Children's groups for ages 4.5 to 18",
       foreignLanguage:
         "Russian as a foreign language for children and adults of any age",
