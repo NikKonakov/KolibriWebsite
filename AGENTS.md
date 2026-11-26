@@ -1,6 +1,6 @@
 # Fusion Starter
 
-A production-ready full-stack React application template with integrated Express server, featuring React Router 6 SPA mode, TypeScript, Vitest, Zod and modern tooling.
+Website of Kolibri School, built on the Fusion Starter template: React with an integrated Express server, React Router 6, TypeScript (strict), Vitest and modern tooling. Pages are prerendered to static HTML at build time.
 
 While the starter comes with a express server, only create endpoint when strictly neccesary, for example to encapsulate logic that must leave in the server, such as private keys handling, or certain DB operations, db...
 
@@ -10,23 +10,30 @@ While the starter comes with a express server, only create endpoint when strictl
 - **Frontend**: React 18 + React Router 6 (spa) + TypeScript + Vite + TailwindCSS 3
 - **Backend**: Express server integrated with Vite dev server
 - **Testing**: Vitest
-- **UI**: Radix UI + TailwindCSS 3 + Lucide React icons
+- **UI**: TailwindCSS 3 + Lucide React icons; Radix UI via shadcn/ui components
 
 ## Project Structure
 
 ```
 client/                   # React SPA frontend
 ├── pages/                # Route components (Index.tsx = home)
-├── components/ui/        # Pre-built UI component library
-├── App.tsx                # App entry point and with SPA routing setup
+├── components/           # Page sections; Section, IconTile, ExternalLink helpers
+├── components/ui/        # shadcn/ui components in use (add more with `npx shadcn@latest add <name>`)
+├── content/              # School facts, gallery, news data
+├── i18n/                 # Russian/English texts, language detection
+├── App.tsx               # Browser entry point
+├── AppRoutes.tsx         # SPA routes (shared with the prerender)
 └── global.css            # TailwindCSS 3 theming and global styles
+
+scripts/                  # Build steps: Facebook news import, prerender
 
 server/                   # Express API backend
 ├── index.ts              # Main server setup (express config + routes)
 └── routes/               # API handlers
 
-shared/                   # Types used by both client & server
-└── api.ts                # Example of how to share api interfaces
+shared/                   # Code used by client, server & configs
+├── api.ts                # Example of how to share api interfaces
+└── security-headers.ts   # HTTP security headers (keep vercel.json in sync)
 ```
 
 ## Key Features
@@ -55,7 +62,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 - **Primary**: TailwindCSS 3 utility classes
 - **Theme and design tokens**: Configure in `client/global.css` 
-- **UI components**: Pre-built library in `client/components/ui/`
+- **UI components**: shadcn/ui components in `client/components/ui/`; only the ones in use are kept
 - **Utility**: `cn()` function combines `clsx` + `tailwind-merge` for conditional classes
 
 ```typescript
@@ -96,6 +103,13 @@ pnpm start      # Start production server
 pnpm typecheck  # TypeScript validation
 pnpm test          # Run Vitest tests
 ```
+
+## Security Rules
+
+- Never commit secrets: use `.env` (git-ignored) locally and Vercel environment variables in production; document new settings in `.env.example`.
+- Security headers live in `shared/security-headers.ts` and must be mirrored in `vercel.json` (a test enforces it). Loading anything from another site requires updating the Content Security Policy.
+- Open external links with the `ExternalLink` component (adds `rel="noopener noreferrer"`).
+- Treat data from third parties (Facebook, URLs, env values) as untrusted: validate before use.
 
 ## Adding Features
 
@@ -160,5 +174,5 @@ const data: MyRouteResponse = await response.json();
 - TypeScript throughout (client, server, shared)
 - Full hot reload for rapid development
 - Production-ready with multiple deployment options
-- Comprehensive UI component library included
+- Page sections share the `Section` wrapper and the `kolibri` color palette (tailwind.config.ts)
 - Type-safe API communication via shared interfaces

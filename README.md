@@ -18,7 +18,7 @@ This website was **designed and migrated to code** to provide an engaging online
 ## 🛠️ Tech Stack
 
 - **Frontend**: React 18 + TypeScript + Vite
-- **Styling**: TailwindCSS 3 + Radix UI components
+- **Styling**: TailwindCSS 3 with the `kolibri` palette (tailwind.config.ts), one Radix UI component (dialog), self-hosted Inter and Nunito fonts
 - **Routing**: React Router 6 (SPA mode)
 - **Backend**: Express.js server
 - **Package Manager**: pnpm
@@ -27,16 +27,27 @@ This website was **designed and migrated to code** to provide an engaging online
 ## 📂 Project Structure
 
 ```
-client/               # React frontend
-├── components/       # Reusable React components
-├── pages/           # Route pages
-└── lib/             # Utility functions
+client/                  # React website
+├── App.tsx              # Browser entry: styles, fonts, hydration
+├── AppRoutes.tsx        # Routes: / (ru), /en (en), 404
+├── entry-server.tsx     # Build-time prerender entry
+├── pages/               # Index (home page), NotFound
+├── components/          # Page sections + Section, IconTile, ExternalLink helpers
+│   └── ui/dialog.tsx    # The only shadcn/ui component in use
+├── content/             # School facts, gallery photos, news
+├── i18n/                # Russian/English texts and language detection
+├── seo/head.ts          # <head> tags and structured data per language
+└── lib/utils.ts         # cn() class-name helper
 
-server/              # Express backend
-├── routes/          # API endpoints
-└── index.ts         # Server configuration
+scripts/                 # Build steps (Node.js)
+├── fetch-facebook-news.mjs  # Step 1: posts from the Facebook Page
+├── prerender.mjs        # Step 4: static HTML, robots.txt, sitemap.xml
+└── lib/                 # Pure, unit-tested helpers for both
 
-shared/              # Shared TypeScript types
+server/                  # Optional Express server (dev middleware, self-hosting)
+shared/                  # Code shared by client, server and configs
+├── api.ts               # API response types
+└── security-headers.ts  # HTTP security headers (mirrored in vercel.json)
 ```
 
 ## 🚀 Getting Started
@@ -73,20 +84,66 @@ The development server runs on port 8080 by default and includes:
 ### Available Scripts
 
 - `pnpm dev` - Start development server (client + server)
-- `pnpm build` - Create production build
-- `pnpm start` - Run production server
-- `pnpm typecheck` - Run TypeScript validation
-- `pnpm test` - Run test suite
+- `pnpm build` - Production build: Facebook news → client bundle → SSR bundle → prerendered pages
+- `pnpm news` - Only fetch Facebook news (needs `FB_PAGE_TOKEN`)
+- `pnpm build:server` + `pnpm start` - Optional self-hosted Node.js server
+- `pnpm typecheck` - TypeScript validation (strict mode)
+- `pnpm test` - Unit tests (Vitest)
+
+After `pnpm build`, run `npx vite preview` to test the production build locally with the same security headers as Vercel.
+
+## 🔒 Security
+
+- **Secrets**: real values live only in Vercel's Environment Variables or a local `.env`, which git ignores. `.env.example` lists every setting. Never commit tokens.
+- **Facebook token**: read at build time only, sent in a request header (never in a URL or log), never included in the website bundle.
+- **HTTP security headers** (`shared/security-headers.ts`, mirrored in `vercel.json`): a strict Content Security Policy (scripts, styles, images and fonts only from this site), clickjacking protection, `nosniff`, a strict referrer policy and disabled browser permissions. A unit test fails if the two copies differ.
+- **No third-party requests**: fonts are self-hosted, the Facebook SDK is gone, news photos are downloaded at build time.
+- **External links** go through `ExternalLink`, which always adds `rel="noopener noreferrer"`.
+- **Data from Facebook** is validated: only https links, image files under 5 MB with digit-only names, timeouts on every request.
+- **Dependencies**: only packages the site uses (24, down from 79); check with `pnpm audit`. pnpm doesn't run dependency install scripts unless approved.
 
 ## 🎯 Key Sections
 
-1. **Header**: Responsive navigation with logo and menu
-2. **Welcome Banner**: Introduction with call-to-action for trial lessons
-3. **Why Choose Us**: Highlights of school's unique offerings
-4. **Programs**: Detailed accordion of class levels and activities
-5. **News**: Latest updates and announcements
-6. **Reviews**: Parent and student testimonials
-7. **Footer**: Contact information and social media links
+In page order (`client/pages/Index.tsx`):
+
+1. **Header**: logo, RU/EN switcher, "Trial lesson" button, section menu
+2. **Hero**: headline, call to action, stage photo, four key facts (schedule, ages, levels, area)
+3. **Why us**: five reasons parents choose Kolibri
+4. **Programs** (`Directions.tsx`): the school's five programs, in the school's own wording, plus the library panel (sign in to the Libib catalog, or register through WhatsApp: Libib has no self-registration)
+5. **Levels**: four class levels, from "First steps" to Russian as a foreign language
+6. **School life**: photo gallery with a full-size viewer
+7. **News**: latest posts from the Facebook Page
+8. **Reviews**: parents' reviews and a link to Google reviews
+9. **Contact**: WhatsApp, call, email, address and map
+10. **Footer**: copyright and social links
+
+All texts live in `client/i18n/translations.ts`; colors in the `kolibri` palette of `tailwind.config.ts`.
+
+## 🔎 SEO & Languages
+
+- **Two languages**: Russian at `/`, English at `/en/`. Texts live in `client/i18n/translations.ts`.
+- **Language detection**: a visitor's earlier choice is restored automatically; otherwise a small banner offers the other language based on the browser language (`client/i18n/detect.ts`).
+- **Prerendered HTML**: `pnpm build` renders both pages to static HTML (`scripts/prerender.mjs`), so Google sees the full text without running JavaScript.
+- **Site address**: set `SITE_URL` (e.g. `https://kolibrischool.ca`) in the hosting settings. On Vercel it falls back to the production domain automatically. It is used for canonical and hreflang links, `sitemap.xml` and `robots.txt`.
+- **School facts** (phone, address, links): `client/content/school.ts`.
+- **News cards**: pulled from the school's Facebook Page at build time (see below); optional manual news in `client/content/news.ts`.
+
+## 📰 Facebook news
+
+The News section shows the 6 latest posts from the school's Facebook Page. `scripts/fetch-facebook-news.mjs` downloads them during `pnpm build`, so they are part of the HTML that Google reads. A GitHub Action rebuilds the site every morning.
+
+One-time setup (about 30 minutes, done by someone who manages the Page):
+
+1. **Create a Meta app**: [developers.facebook.com/apps](https://developers.facebook.com/apps) → Create app → "Other" → "Business". Name it e.g. "Kolibri Website". Leave it in Development mode.
+2. **Get a short-lived token**: [Graph API Explorer](https://developers.facebook.com/tools/explorer/) → pick the app → add permissions `pages_show_list` and `pages_read_engagement` → Generate Access Token → choose the Kolibri Page.
+3. **Make it long-lived**: [Access Token Debugger](https://developers.facebook.com/tools/debug/accesstoken/) → paste the token → Debug → "Extend Access Token" → copy the new token.
+4. **Get the Page token**: back in Graph API Explorer, paste the long-lived token and run `GET me/accounts`. Copy the `access_token` of the Kolibri Page. Check it in the Access Token Debugger: "Expires" should say "Never".
+5. **Add it to Vercel**: Project → Settings → Environment Variables → `FB_PAGE_TOKEN` = the Page token (Production and Preview) → redeploy.
+6. **Daily refresh**: Vercel → Settings → Git → Deploy Hooks → create one for the production branch → copy the URL. GitHub → this repo → Settings → Secrets and variables → Actions → New secret `VERCEL_DEPLOY_HOOK` = that URL. The project must be connected to GitHub in Vercel for deploy hooks to exist.
+
+Test locally: `FB_PAGE_TOKEN=... pnpm news`, then `pnpm dev`.
+
+If the token stops working (the person who created it lost access to the Page, changed their password, or Meta reset it), the build still succeeds and the section shows only the Facebook button. The build log then says "Facebook returned an error": repeat steps 2–5.
 
 ## 🌐 Deployment
 
@@ -168,9 +225,8 @@ vercel env add <NAME>
 
 The project includes:
 
-- `vercel.json` - Vercel configuration file
+- `vercel.json` - build, routes (/en redirect, real 404s), security and cache headers
 - `.vercelignore` - Files to exclude from deployment
-- `api/` folder - Serverless functions for API endpoints
 
 #### Environment Variables
 

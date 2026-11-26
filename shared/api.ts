@@ -1,12 +1,9 @@
 /**
- * Shared code between client and server
- * Useful to share types between client and server
- * and/or small pure JS functions that can be used on both client and server
+ * Types shared by the client and the server, so both sides agree on the shape
+ * of API responses. Import with `@shared/api`.
  */
 
-/**
- * Example response type for /api/demo
- */
+/** Response of the example endpoint GET /api/demo (server/routes/demo.ts). */
 export interface DemoResponse {
   message: string;
 }

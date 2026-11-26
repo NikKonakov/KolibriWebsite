@@ -1,21 +1,18 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Школа "Колибри"</title>
-    <link rel="icon" type="image/jpeg" href="/kolibriImageCanva.jpg" />
-    <script
-      async
-      defer
-      crossorigin="anonymous"
-      src="https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v18.0"
-      nonce="YOUR_NONCE"
-    ></script>
+    <meta name="theme-color" content="#FFFFFF" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Fonts are self-hosted (client/App.tsx): no requests to Google. -->
+    <!-- Title, description, hreflang and structured data are injected per language by scripts/prerender.mjs -->
+    <!--app-head-->
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root"><!--app-html--></div>
 
     <script type="module" src="/client/App.tsx"></script>
   </body>

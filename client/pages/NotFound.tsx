@@ -1,27 +1,33 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { dictionaries } from "@/i18n/translations";
 
-const NotFound = () => {
-  const location = useLocation();
+const linkClass =
+  "font-bold text-kolibri-teal underline-offset-4 hover:underline";
 
-  useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname,
-    );
-  }, [location.pathname]);
+/**
+ * 404 page for unknown addresses. It's shown in both languages at once,
+ * because a wrong address says nothing about the visitor's language.
+ * Hosting returns it with a real 404 status (vercel.json, node-build.ts).
+ */
+export default function NotFound() {
+  const { ru, en } = dictionaries;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
-        </a>
+    <main className="flex min-h-screen items-center justify-center px-4">
+      <div className="flex flex-col gap-3 text-center">
+        <h1 className="font-display text-5xl font-black">404</h1>
+        <p className="text-xl">{ru.notFound.title}</p>
+        <p className="text-kolibri-muted" lang="en">
+          {en.notFound.title}
+        </p>
+        <div className="flex justify-center gap-5 pt-2">
+          <a href="/" className={linkClass}>
+            {ru.notFound.back}
+          </a>
+          <a href="/en/" lang="en" className={linkClass}>
+            {en.notFound.back}
+          </a>
+        </div>
       </div>
-    </div>
+    </main>
   );
-};
-
-export default NotFound;
+}

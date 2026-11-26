@@ -17,13 +17,11 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
 
-    /* Linting */
-    "strict": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noImplicitAny": false,
-    "noFallthroughCasesInSwitch": false,
-    "strictNullChecks": false,
+    /* Type safety: catch null/undefined bugs and dead code at compile time */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
 
     /* Path mapping */
     "baseUrl": ".",

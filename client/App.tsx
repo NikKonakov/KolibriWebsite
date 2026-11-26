@@ -1,30 +1,32 @@
+/**
+ * Browser entry point (loaded by index.html): global styles, fonts and the
+ * React app.
+ */
 import "./global.css";
+// Self-hosted variable fonts: Inter for text, Nunito for headings. One file
+// per alphabet covers every weight; browsers download only the alphabets a
+// page uses (Cyrillic, Latin), and no visitor data goes to Google Fonts.
+import "@fontsource-variable/inter";
+import "@fontsource-variable/nunito";
 
-import { Toaster } from "@/components/ui/toaster";
-import { createRoot } from "react-dom/client";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
+import { createRoot, hydrateRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes, { routerFuture } from "./AppRoutes";
 
-const queryClient = new QueryClient();
-
+/** The whole app: the browser's router around the page routes. */
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <BrowserRouter future={routerFuture}>
+    <AppRoutes />
+  </BrowserRouter>
 );
 
-createRoot(document.getElementById("root")!).render(<App />);
+const container = document.getElementById("root")!;
+
+// Production pages arrive prerendered (scripts/prerender.mjs), so React
+// attaches to the existing HTML ("hydrates") instead of drawing it again.
+// In development the page starts empty and React renders from scratch.
+if (container.firstElementChild) {
+  hydrateRoot(container, <App />);
+} else {
+  createRoot(container).render(<App />);
+}

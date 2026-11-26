@@ -1,8 +1,14 @@
 import { defineConfig } from "vite";
 import path from "path";
 
-// Server build configuration
+/**
+ * Build configuration for the optional self-hosted Node.js server
+ * (server/node-build.ts → dist/server/node-build.mjs, run with `pnpm start`).
+ * Vercel doesn't use it.
+ */
 export default defineConfig({
+  // The server doesn't need its own copy of the site's images and icons.
+  publicDir: false,
   build: {
     lib: {
       entry: path.resolve(__dirname, "server/node-build.ts"),
@@ -14,8 +20,8 @@ export default defineConfig({
     target: "node22",
     ssr: true,
     rollupOptions: {
+      // Node.js built-ins and Express are loaded at runtime, not bundled.
       external: [
-        // Node.js built-ins
         "fs",
         "path",
         "url",
@@ -29,16 +35,14 @@ export default defineConfig({
         "buffer",
         "querystring",
         "child_process",
-        // External dependencies that should not be bundled
         "express",
-        "cors",
       ],
       output: {
         format: "es",
         entryFileNames: "[name].mjs",
       },
     },
-    minify: false, // Keep readable for debugging
+    minify: false, // Readable output makes server errors easier to debug.
     sourcemap: true,
   },
   resolve: {
