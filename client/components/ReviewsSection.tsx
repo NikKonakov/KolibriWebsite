@@ -19,9 +19,10 @@ export default function ReviewsSection() {
       title={t.reviews.heading}
       intro={t.reviews.note}
     >
-      <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-4">
+      {/* Wrapping flex row: quotes in a short last row grow to fill it. */}
+      <ul className="flex flex-wrap gap-4">
         {t.reviews.items.map((item) => (
-          <li key={item.name} className="flex">
+          <li key={item.name} className="flex min-w-0 flex-[1_1_300px]">
             <figure className="flex w-full flex-col gap-3 rounded-[20px] bg-white p-6">
               <span
                 aria-hidden="true"

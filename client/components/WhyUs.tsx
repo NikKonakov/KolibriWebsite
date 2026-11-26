@@ -32,7 +32,7 @@ export default function WhyUs() {
       title={t.whyUs.heading}
       intro={t.whyUs.intro}
     >
-      <ul className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-x-4 gap-y-6">
+      <ul className="grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-3 lg:grid-cols-5">
         {FEATURES.map(({ id, Icon, tone }) => (
           <li key={id} className="flex flex-col gap-2.5">
             <IconTile icon={Icon} tone={tone} />

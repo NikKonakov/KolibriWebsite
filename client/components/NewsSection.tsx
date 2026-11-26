@@ -48,7 +48,8 @@ export default function NewsSection() {
       action={news.length > 0 ? allNewsLink : undefined}
     >
       {news.length > 0 ? (
-        <ul className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4">
+        // Up to 6 posts: 3 + 3 on desktop, 2 + 2 + 2 on tablets, so no row is half empty.
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {news.map((item, index) => (
             <li key={item.date + index} className="flex">
               <NewsCard

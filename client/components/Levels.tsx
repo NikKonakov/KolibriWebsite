@@ -20,7 +20,7 @@ export default function Levels() {
       title={t.levels.heading}
       intro={t.levels.intro}
     >
-      <ol className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
+      <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {LEVELS.map((id) => {
           const level = t.levels.items[id];
           const isForeignLanguage = id === "rfl";

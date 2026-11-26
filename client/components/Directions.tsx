@@ -38,11 +38,13 @@ export default function Directions() {
 
   return (
     <Section id="directions" tone="teal" title={t.directions.heading}>
-      <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-4">
+      {/* Wrapping flex row: cards in a short last row grow to fill it, so
+          5 cards show as 3 + 2 with no empty slot. */}
+      <ul className="flex flex-wrap gap-4">
         {DIRECTIONS.map(({ id, Icon, tone }) => (
           <li
             key={id}
-            className="flex flex-col gap-3 rounded-[20px] bg-white p-6"
+            className="flex min-w-0 flex-[1_1_300px] flex-col gap-3 rounded-[20px] bg-white p-6"
           >
             <IconTile icon={Icon} tone={tone} />
             <h3 className="font-display text-[21px] font-extrabold leading-tight">
