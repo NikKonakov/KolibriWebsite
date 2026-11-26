@@ -18,7 +18,7 @@ This website was **designed and migrated to code** to provide an engaging online
 ## 🛠️ Tech Stack
 
 - **Frontend**: React 18 + TypeScript + Vite
-- **Styling**: TailwindCSS 3, one Radix UI component (dialog), self-hosted fonts
+- **Styling**: TailwindCSS 3 with the `kolibri` palette (tailwind.config.ts), one Radix UI component (dialog), self-hosted Inter and Nunito fonts
 - **Routing**: React Router 6 (SPA mode)
 - **Backend**: Express.js server
 - **Package Manager**: pnpm
@@ -32,7 +32,7 @@ client/                  # React website
 ├── AppRoutes.tsx        # Routes: / (ru), /en (en), 404
 ├── entry-server.tsx     # Build-time prerender entry
 ├── pages/               # Index (home page), NotFound
-├── components/          # Page sections; ExternalLink and SectionCard helpers
+├── components/          # Page sections + Section, IconTile, ExternalLink helpers
 │   └── ui/dialog.tsx    # The only shadcn/ui component in use
 ├── content/             # School facts, gallery photos, news
 ├── i18n/                # Russian/English texts and language detection
@@ -104,13 +104,20 @@ After `pnpm build`, run `npx vite preview` to test the production build locally 
 
 ## 🎯 Key Sections
 
-1. **Header**: Responsive navigation with logo and menu
-2. **Welcome Banner**: Introduction with call-to-action for trial lessons
-3. **Why Choose Us**: Highlights of school's unique offerings
-4. **Programs**: Detailed accordion of class levels and activities
-5. **News**: Latest updates and announcements
-6. **Reviews**: Parent and student testimonials
-7. **Footer**: Contact information and social media links
+In page order (`client/pages/Index.tsx`):
+
+1. **Header**: logo, RU/EN switcher, "Trial lesson" button, section menu
+2. **Hero**: headline, call to action, stage photo, four key facts (schedule, ages, levels, area)
+3. **Why us**: five reasons parents choose Kolibri
+4. **Programs** (`Directions.tsx`): the school's five programs, in the school's own wording, plus the library panel (sign in to the Libib catalog, or register through WhatsApp: Libib has no self-registration)
+5. **Levels**: four class levels, from "First steps" to Russian as a foreign language
+6. **School life**: photo gallery with a full-size viewer
+7. **News**: latest posts from the Facebook Page
+8. **Reviews**: parents' reviews and a link to Google reviews
+9. **Contact**: WhatsApp, call, email, address and map
+10. **Footer**: copyright and social links
+
+All texts live in `client/i18n/translations.ts`; colors in the `kolibri` palette of `tailwind.config.ts`.
 
 ## 🔎 SEO & Languages
 

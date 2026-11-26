@@ -1,51 +1,49 @@
+import { ArrowRight } from "lucide-react";
 import ExternalLink from "./ExternalLink";
-import ReviewCard from "./ReviewCard";
-import SectionCard from "./SectionCard";
+import Section from "./Section";
 import { useI18n } from "@/i18n/LanguageContext";
 import { school } from "@/content/school";
 
-/** Avatar colors, given to reviews in turn (fixed, so prerender and browser match). */
-const gradients = [
-  "from-brand-orange to-amber-400",
-  "from-blue-400 to-blue-600",
-  "from-green-400 to-green-600",
-  "from-purple-400 to-purple-600",
-  "from-pink-400 to-pink-600",
-];
-
 /**
- * "Reviews": parents' reviews in a horizontally scrolling row, with a link
- * to all reviews in the school's Google profile. On the English page the
- * reviews are translated and say so.
+ * "What parents say": parents' reviews as quote cards, with a link to all
+ * reviews in the school's Google profile. On the English page the reviews
+ * are translations, and the intro line says so.
  */
 export default function ReviewsSection() {
   const { t } = useI18n();
 
   return (
-    <SectionCard className="p-4 flex flex-col items-center gap-4">
-      <div className="flex flex-col items-center gap-1">
-        <h2 className="text-xl md:text-2xl text-black text-center font-medium">
-          {t.reviews.heading}
-        </h2>
-        {t.reviews.note && (
-          <p className="text-xs text-brand-text">{t.reviews.note}</p>
-        )}
-      </div>
-      <div className="w-full flex items-stretch gap-5 overflow-x-auto pb-2 snap-x snap-mandatory scroll-smooth">
-        {t.reviews.items.map((review, index) => (
-          <ReviewCard
-            key={review.name}
-            {...review}
-            avatarColor={gradients[index % gradients.length]}
-          />
+    <Section
+      id="reviews"
+      tone="sand"
+      title={t.reviews.heading}
+      intro={t.reviews.note}
+    >
+      <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-4">
+        {t.reviews.items.map((item) => (
+          <li key={item.name} className="flex">
+            <figure className="flex w-full flex-col gap-3 rounded-[20px] bg-white p-6">
+              <span
+                aria-hidden="true"
+                className="font-display text-5xl font-black leading-[0.6] text-kolibri-orange-deep"
+              >
+                “
+              </span>
+              <blockquote className="text-base">{item.review}</blockquote>
+              <figcaption className="mt-auto text-[15px] font-bold">
+                {item.name}
+              </figcaption>
+            </figure>
+          </li>
         ))}
-      </div>
+      </ul>
       <ExternalLink
         href={school.google}
-        className="text-sm md:text-base font-medium text-blue-700 underline-offset-4 hover:underline"
+        className="inline-flex min-h-[44px] items-center gap-1.5 self-start font-bold text-kolibri-teal no-underline hover:underline"
       >
-        {t.reviews.googleLink} →
+        {t.reviews.googleLink}
+        <ArrowRight aria-hidden="true" className="h-[18px] w-[18px]" />
       </ExternalLink>
-    </SectionCard>
+    </Section>
   );
 }

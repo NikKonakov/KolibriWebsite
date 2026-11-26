@@ -1,75 +1,82 @@
-import { ExternalLink as ExternalLinkIcon, Facebook } from "lucide-react";
+import { ArrowRight, Facebook } from "lucide-react";
 import ExternalLink from "./ExternalLink";
-import SectionCard from "./SectionCard";
+import Section from "./Section";
 import { useI18n } from "@/i18n/LanguageContext";
 import { news, type NewsItem } from "@/content/news";
 import { school } from "@/content/school";
+import { buttonClass } from "@/lib/button";
 import type { Lang } from "@/i18n/detect";
 
 /**
  * "News": the latest posts from the school's Facebook Page, imported at build
- * time (scripts/fetch-facebook-news.mjs), plus a button to the Page.
- *
- * Replaces Facebook's embed widget, which stopped showing posts (expired SDK
- * version, blocked by Safari/Firefox and ad blockers). These cards always
- * load, and Google can index their text.
+ * time (scripts/fetch-facebook-news.mjs), plus a link to the Page. When no
+ * posts were imported (e.g. no token yet), it shows a short note and the
+ * Facebook button instead of empty space.
  */
 export default function NewsSection() {
   const { t, lang } = useI18n();
   const dateFormat = new Intl.DateTimeFormat(
     lang === "ru" ? "ru-RU" : "en-CA",
-    { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" },
+    {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC",
+    },
   );
   // Facebook posts are in Russian only; the English page says so once.
-  const showLanguageNote =
-    Boolean(t.news.otherLanguageNote) && news.some((item) => !item.text[lang]);
+  const languageNote = news.some((item) => !item.text[lang])
+    ? t.news.otherLanguageNote
+    : undefined;
+
+  const allNewsLink = (
+    <ExternalLink
+      href={school.facebook}
+      className="inline-flex min-h-[44px] items-center gap-1.5 font-bold text-kolibri-teal no-underline hover:underline"
+    >
+      <Facebook aria-hidden="true" className="h-[18px] w-[18px]" />
+      {t.news.allNews}
+    </ExternalLink>
+  );
 
   return (
-    <SectionCard id="news" className="p-6 flex flex-col items-center gap-4">
-      <h2 className="text-xl md:text-2xl text-brand-dark text-center font-medium">
-        {t.news.heading}
-      </h2>
-
-      {showLanguageNote && (
-        <p className="-mt-2 text-xs text-brand-text">
-          {t.news.otherLanguageNote}
-        </p>
-      )}
-
-      {news.length > 0 && (
-        <div className="grid w-full gap-4 md:grid-cols-2">
+    <Section
+      id="news"
+      tone="cream"
+      title={t.news.heading}
+      intro={languageNote}
+      action={news.length > 0 ? allNewsLink : undefined}
+    >
+      {news.length > 0 ? (
+        <ul className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4">
           {news.map((item, index) => (
-            <NewsCard
-              key={item.date + index}
-              item={item}
-              lang={lang}
-              date={dateFormat.format(new Date(item.date))}
-              readMore={t.news.readMore}
-            />
+            <li key={item.date + index} className="flex">
+              <NewsCard
+                item={item}
+                lang={lang}
+                date={dateFormat.format(new Date(item.date))}
+                readMore={t.news.readMore}
+              />
+            </li>
           ))}
+        </ul>
+      ) : (
+        <div className="flex flex-col items-start gap-4 rounded-[20px] bg-white p-6">
+          <p className="text-[17px] text-kolibri-body">{t.news.emptyText}</p>
+          <ExternalLink href={school.facebook} className={buttonClass("teal")}>
+            <Facebook aria-hidden="true" className="h-[18px] w-[18px]" />
+            {t.news.allNews}
+          </ExternalLink>
         </div>
       )}
-
-      <div className="flex w-full flex-col items-center gap-3 rounded-xl bg-blue-50 p-5 text-center">
-        <p className="text-sm md:text-base text-brand-dark">
-          {t.news.followText}
-        </p>
-        <ExternalLink
-          href={school.facebook}
-          className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-5 py-2.5 text-sm md:text-base font-medium text-white hover:bg-blue-700 transition-colors"
-        >
-          <Facebook className="h-5 w-5" />
-          {t.news.followButton}
-        </ExternalLink>
-      </div>
-    </SectionCard>
+    </Section>
   );
 }
 
 /**
  * One news card: photo, date, optional title, the start of the text and a
  * link to the full post. Text missing in the page language is shown in
- * Russian and marked with lang="ru" for screen readers.
+ * Russian and marked lang="ru" so screen readers pronounce it correctly.
  */
 function NewsCard({
   item,
@@ -88,38 +95,39 @@ function NewsCard({
   return (
     <article
       lang={textLang !== lang ? textLang : undefined}
-      className="flex flex-col overflow-hidden rounded-xl border border-black/10 bg-brand-light"
+      className="flex w-full flex-col overflow-hidden rounded-[20px] border border-kolibri-line bg-white"
     >
       {item.image && (
         <img
           src={item.image}
           alt=""
           loading="lazy"
+          decoding="async"
           className="aspect-video w-full object-cover"
         />
       )}
-      <div className="flex flex-1 flex-col gap-2 p-4">
+      <div className="flex flex-1 flex-col gap-1.5 p-[18px]">
         <time
           dateTime={item.date}
-          className="text-xs font-medium uppercase tracking-wide text-brand-text"
+          className="text-[13px] font-semibold text-kolibri-muted"
         >
           {date}
         </time>
         {title && (
-          <h3 className="text-base md:text-lg font-semibold text-brand-dark">
+          <h3 className="font-display text-lg font-extrabold leading-snug">
             {title}
           </h3>
         )}
-        <p className="line-clamp-6 text-sm text-brand-dark leading-relaxed whitespace-pre-line">
+        <p className="line-clamp-6 whitespace-pre-line text-[15px] text-kolibri-muted">
           {item.text[textLang]}
         </p>
         {item.link && (
           <ExternalLink
             href={item.link}
-            className="mt-auto inline-flex items-center gap-1 pt-2 text-sm font-medium text-blue-700 hover:underline"
+            className="mt-auto inline-flex min-h-[44px] items-center gap-1 pt-2 text-sm font-bold text-kolibri-teal no-underline hover:underline"
           >
             {readMore}
-            <ExternalLinkIcon className="h-3.5 w-3.5" />
+            <ArrowRight aria-hidden="true" className="h-4 w-4" />
           </ExternalLink>
         )}
       </div>

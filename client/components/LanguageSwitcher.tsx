@@ -1,23 +1,21 @@
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/LanguageContext";
+import { dictionaries } from "@/i18n/translations";
 import { LANGS, LANG_PATH, storeLang } from "@/i18n/detect";
 
-/** RU | EN toggle. Plain links, so each language is its own crawlable page. */
-export default function LanguageSwitcher({
-  className,
-}: {
-  className?: string;
-}) {
-  const { lang } = useI18n();
+/**
+ * RU | EN toggle. Plain links, so each language is its own page that Google
+ * can index; clicking one also remembers the choice (see LanguageSuggestion).
+ * Screen readers hear each language's own name ("Русский", "English").
+ */
+export default function LanguageSwitcher() {
+  const { t, lang } = useI18n();
 
   return (
     <div
-      className={cn(
-        "flex items-center rounded-full bg-white/90 p-0.5 text-xs font-semibold shadow-sm",
-        className,
-      )}
       role="group"
-      aria-label="Language / Язык"
+      aria-label={t.header.languageLabel}
+      className="flex rounded-full bg-kolibri-chip p-[3px] text-[13px] font-semibold"
     >
       {LANGS.map((l) => (
         <a
@@ -25,13 +23,14 @@ export default function LanguageSwitcher({
           href={LANG_PATH[l]}
           hrefLang={l}
           lang={l}
+          aria-label={dictionaries[l].langName}
           aria-current={l === lang ? "page" : undefined}
           onClick={() => storeLang(l)}
           className={cn(
-            "rounded-full px-2.5 py-1 uppercase transition-colors",
+            "flex min-h-[32px] items-center rounded-full px-[11px] uppercase no-underline transition-colors",
             l === lang
-              ? "bg-brand-dark text-white"
-              : "text-brand-dark hover:bg-brand-orange/20",
+              ? "bg-kolibri-ink text-white"
+              : "text-kolibri-ink hover:bg-white",
           )}
         >
           {l}

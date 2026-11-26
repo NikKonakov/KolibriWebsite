@@ -17,7 +17,7 @@ While the starter comes with a express server, only create endpoint when strictl
 ```
 client/                   # React SPA frontend
 ├── pages/                # Route components (Index.tsx = home)
-├── components/           # Page sections, ExternalLink, SectionCard
+├── components/           # Page sections; Section, IconTile, ExternalLink helpers
 ├── components/ui/        # shadcn/ui components in use (add more with `npx shadcn@latest add <name>`)
 ├── content/              # School facts, gallery, news data
 ├── i18n/                 # Russian/English texts, language detection
@@ -174,5 +174,5 @@ const data: MyRouteResponse = await response.json();
 - TypeScript throughout (client, server, shared)
 - Full hot reload for rapid development
 - Production-ready with multiple deployment options
-- Comprehensive UI component library included
+- Page sections share the `Section` wrapper and the `kolibri` color palette (tailwind.config.ts)
 - Type-safe API communication via shared interfaces

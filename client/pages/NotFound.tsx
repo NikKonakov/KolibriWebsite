@@ -1,5 +1,8 @@
 import { dictionaries } from "@/i18n/translations";
 
+const linkClass =
+  "font-bold text-kolibri-teal underline-offset-4 hover:underline";
+
 /**
  * 404 page for unknown addresses. It's shown in both languages at once,
  * because a wrong address says nothing about the visitor's language.
@@ -9,26 +12,22 @@ export default function NotFound() {
   const { ru, en } = dictionaries;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-brand-light px-4">
-      <div className="text-center flex flex-col gap-3">
-        <h1 className="text-4xl font-bold text-brand-dark">404</h1>
-        <p className="text-xl text-brand-dark">{ru.notFound.title}</p>
-        <p className="text-brand-text" lang="en">
+    <main className="flex min-h-screen items-center justify-center px-4">
+      <div className="flex flex-col gap-3 text-center">
+        <h1 className="font-display text-5xl font-black">404</h1>
+        <p className="text-xl">{ru.notFound.title}</p>
+        <p className="text-kolibri-muted" lang="en">
           {en.notFound.title}
         </p>
-        <div className="flex justify-center gap-4 pt-2">
-          <a href="/" className="text-blue-700 underline hover:text-blue-900">
+        <div className="flex justify-center gap-5 pt-2">
+          <a href="/" className={linkClass}>
             {ru.notFound.back}
           </a>
-          <a
-            href="/en/"
-            lang="en"
-            className="text-blue-700 underline hover:text-blue-900"
-          >
+          <a href="/en/" lang="en" className={linkClass}>
             {en.notFound.back}
           </a>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

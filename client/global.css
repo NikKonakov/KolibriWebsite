@@ -1,7 +1,8 @@
 /**
  * Global styles: Tailwind's layers, the few theme colors used by the dialog
  * component (client/components/ui/dialog.tsx) and base typography.
- * Fonts are self-hosted and imported in client/App.tsx.
+ * The site palette and fonts are defined in tailwind.config.ts; the font
+ * files are self-hosted and imported in client/App.tsx.
  */
 @tailwind base;
 @tailwind components;
@@ -10,17 +11,17 @@
 @layer base {
   /*
    * Theme colors as HSL values, read by tailwind.config.ts (shadcn/ui
-   * convention). The site's own palette is `brand` in tailwind.config.ts.
+   * convention). The site's own palette is `kolibri` in tailwind.config.ts.
    */
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 210 39% 20%;
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --border: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --muted-foreground: 210 21% 36%;
+    --accent: 37 33% 93%;
+    --accent-foreground: 210 39% 20%;
+    --border: 37 47% 89%;
+    --ring: 210 39% 20%;
     --radius: 0.5rem;
   }
 
@@ -28,14 +29,31 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
-    font-family: "Playfair Display", serif;
+    @apply bg-kolibri-cream font-sans text-kolibri-ink antialiased;
+    line-height: 1.55;
   }
 
   /* Long words and links wrap instead of widening the page on phones. */
   :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
     overflow-wrap: anywhere;
     word-break: break-word;
+  }
+
+  /* Respect visitors who turned off animations in their system settings. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }

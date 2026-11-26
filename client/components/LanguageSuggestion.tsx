@@ -43,14 +43,14 @@ export default function LanguageSuggestion() {
       lang={offer}
       role="region"
       aria-label={copy.text}
-      className="fixed inset-x-3 bottom-3 z-[60] mx-auto flex max-w-md items-center gap-3 rounded-xl bg-brand-dark px-4 py-3 text-sm text-white shadow-xl"
+      className="fixed inset-x-3 bottom-3 z-[60] mx-auto flex max-w-md items-center gap-3 rounded-xl bg-kolibri-ink px-4 py-3 text-sm text-white shadow-xl"
     >
       <p className="flex-1">{copy.text}</p>
       <a
         href={LANG_PATH[offer]}
         hrefLang={offer}
         onClick={() => storeLang(offer)}
-        className="whitespace-nowrap rounded-md bg-brand-orange px-3 py-1.5 font-semibold text-brand-dark hover:bg-brand-orange/90"
+        className="whitespace-nowrap rounded-md bg-kolibri-orange px-3 py-1.5 font-semibold text-kolibri-ink no-underline hover:brightness-95"
       >
         {copy.action}
       </a>
@@ -63,7 +63,7 @@ export default function LanguageSuggestion() {
         className="rounded-md p-1 text-white/70 hover:text-white"
         aria-label={copy.close}
       >
-        <X className="h-4 w-4" />
+        <X aria-hidden="true" className="h-4 w-4" />
       </button>
     </div>
   );

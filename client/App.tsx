@@ -3,13 +3,11 @@
  * React app.
  */
 import "./global.css";
-// Self-hosted "Playfair Display" in the weights the site uses (400–700).
-// Each file covers Cyrillic and Latin; browsers download only what a page
-// needs, and no visitor data goes to Google Fonts.
-import "@fontsource/playfair-display/400.css";
-import "@fontsource/playfair-display/500.css";
-import "@fontsource/playfair-display/600.css";
-import "@fontsource/playfair-display/700.css";
+// Self-hosted variable fonts: Inter for text, Nunito for headings. One file
+// per alphabet covers every weight; browsers download only the alphabets a
+// page uses (Cyrillic, Latin), and no visitor data goes to Google Fonts.
+import "@fontsource-variable/inter";
+import "@fontsource-variable/nunito";
 
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";

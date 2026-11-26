@@ -24,3 +24,14 @@ export const school = {
   library: "https://www.libib.com/u/kolibrischool",
   logo: "/kolibriImageCanva.jpg",
 } as const;
+
+/**
+ * Link that opens a WhatsApp chat with the school, optionally with a
+ * pre-filled message (e.g. a library registration request). The message is
+ * URL-encoded, so quotes, «» and line breaks can't break the link.
+ */
+export function whatsappLink(message?: string): string {
+  return message
+    ? `${school.whatsapp}?text=${encodeURIComponent(message)}`
+    : school.whatsapp;
+}
