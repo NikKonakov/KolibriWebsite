@@ -59,6 +59,15 @@ describe.each(pages)("home page $url", ({ url, lang }) => {
     }
   });
 
+  it("links the footer to the site's GitHub problem form", () => {
+    expect(html).toContain(
+      escapeHtml(
+        "https://github.com/NikKonakov/KolibriWebsite/issues/new?template=site-problem.yml",
+      ),
+    );
+    expect(html).toContain(escapeHtml(t.footer.reportProblem));
+  });
+
   it("pre-fills the library registration message in the page language", () => {
     const encoded = encodeURIComponent(t.directions.library.registerMessage);
     expect(html).toContain(

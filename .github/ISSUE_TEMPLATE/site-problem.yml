@@ -1,0 +1,39 @@
+# Form behind the "Report a website problem" link in the site footer
+# (client/content/school.ts, reportProblem). Issues in this repository are
+# public, so the form asks people not to share personal details.
+name: Проблема на сайте / Website problem
+description: Что-то не работает или выглядит не так / Something is broken or looks wrong
+title: "[Сайт] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо, что сообщили! Это сообщение видно всем, поэтому не пишите телефоны, адреса и имена детей.
+
+        Thank you for reporting! This report is public, so please don't include phone numbers, addresses or children's names.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Что случилось? / What went wrong?
+      description: Что вы сделали и что увидели. / What you did and what you saw.
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Где? / Where?
+      description: Раздел сайта или ссылка, например «Новости». / Section or link, e.g. "News".
+  - type: dropdown
+    id: device
+    attributes:
+      label: Устройство / Device
+      options:
+        - Телефон / Phone
+        - Компьютер / Computer
+        - Планшет / Tablet
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Скриншот, по желанию / Screenshot, optional
+      description: Перетащите картинку в это поле. / Drag an image into this box.

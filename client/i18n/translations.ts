@@ -107,7 +107,7 @@ export interface Dictionary {
     email: string;
     mapLink: string;
   };
-  footer: { copyright: string };
+  footer: { copyright: string; reportProblem: string };
   notFound: { title: string; back: string };
 }
 
@@ -297,7 +297,10 @@ const ru: Dictionary = {
     email: "Email",
     mapLink: "Открыть на карте",
   },
-  footer: { copyright: "Школа «Колибри», Калгари" },
+  footer: {
+    copyright: "Школа «Колибри», Калгари",
+    reportProblem: "Сообщить об ошибке на сайте",
+  },
   notFound: {
     title: "Страница не найдена",
     back: "На главную",
@@ -491,7 +494,10 @@ const en: Dictionary = {
     email: "Email",
     mapLink: "Open on the map",
   },
-  footer: { copyright: "Kolibri School, Calgary" },
+  footer: {
+    copyright: "Kolibri School, Calgary",
+    reportProblem: "Report a website problem",
+  },
   notFound: {
     title: "Page not found",
     back: "Go to the home page",

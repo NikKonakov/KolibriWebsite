@@ -141,9 +141,15 @@ One-time setup (about 30 minutes, done by someone who manages the Page):
 5. **Add it to Vercel**: Project → Settings → Environment Variables → `FB_PAGE_TOKEN` = the Page token (Production and Preview) → redeploy.
 6. **Daily refresh**: Vercel → Settings → Git → Deploy Hooks → create one for the production branch → copy the URL. GitHub → this repo → Settings → Secrets and variables → Actions → New secret `VERCEL_DEPLOY_HOOK` = that URL. The project must be connected to GitHub in Vercel for deploy hooks to exist.
 
+How a post becomes a card: a first line of up to 100 characters becomes the card title, and a one-line post is shown as a title only. Emoji are kept, and long texts are never cut in the middle of an emoji.
+
 Test locally: `FB_PAGE_TOKEN=... pnpm news`, then `pnpm dev`.
 
 If the token stops working (the person who created it lost access to the Page, changed their password, or Meta reset it), the build still succeeds and the section shows only the Facebook button. The build log then says "Facebook returned an error": repeat steps 2–5.
+
+## 🐞 Problem reports
+
+The footer link "Сообщить об ошибке на сайте" / "Report a website problem" opens a new GitHub issue with the form in `.github/ISSUE_TEMPLATE/site-problem.yml`. Reporters need a free GitHub account. Issues are public, so the form asks people not to share phone numbers, addresses or children's names. Questions about classes are sent to the school's WhatsApp instead (`.github/ISSUE_TEMPLATE/config.yml`).
 
 ## 🌐 Deployment
 

@@ -9,8 +9,9 @@ const linkClass =
   "font-semibold text-kolibri-gold no-underline hover:underline";
 
 /**
- * Slim dark footer: copyright and links to the school's social pages
- * (Instagram appears once a real account is set in content/school.ts).
+ * Slim dark footer: copyright, links to the school's social pages
+ * (Instagram appears once a real account is set in content/school.ts) and a
+ * "Report a website problem" link that opens a GitHub issue for the developer.
  */
 export default function Footer() {
   const { t } = useI18n();
@@ -21,7 +22,7 @@ export default function Footer() {
         <p>
           © {YEAR} {t.footer.copyright}
         </p>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-x-4 gap-y-2">
           <ExternalLink href={school.facebook} className={linkClass}>
             Facebook
           </ExternalLink>
@@ -30,6 +31,9 @@ export default function Footer() {
               Instagram
             </ExternalLink>
           )}
+          <ExternalLink href={school.reportProblem} className={linkClass}>
+            {t.footer.reportProblem}
+          </ExternalLink>
         </div>
       </div>
     </footer>

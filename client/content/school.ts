@@ -22,6 +22,13 @@ export const school = {
   /** Leave empty until the school has a real Instagram account; the icon is hidden while empty. */
   instagram: "",
   library: "https://www.libib.com/u/kolibrischool",
+  /**
+   * "Report a website problem" in the footer: opens a new GitHub issue in the
+   * site's repository with the form in .github/ISSUE_TEMPLATE/site-problem.yml.
+   * It needs a free GitHub account, and issues are public.
+   */
+  reportProblem:
+    "https://github.com/NikKonakov/KolibriWebsite/issues/new?template=site-problem.yml",
   logo: "/kolibriImageCanva.jpg",
 } as const;
 
