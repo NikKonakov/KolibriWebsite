@@ -29,10 +29,23 @@ describe("splitTitle", () => {
     });
   });
 
-  it("keeps a single paragraph or a long first line as text", () => {
-    expect(splitTitle("Одна строка")).toEqual({ text: "Одна строка" });
+  it("makes a short one-line post all title", () => {
+    expect(splitTitle("Встреча с поэзией — 29 ноября!!!")).toEqual({
+      title: "Встреча с поэзией — 29 ноября!!!",
+      text: "",
+    });
+  });
+
+  it("keeps a long first line as text", () => {
     const long = "а".repeat(150) + "\nещё";
     expect(splitTitle(long)).toEqual({ text: long });
+    expect(splitTitle("б".repeat(150))).toEqual({ text: "б".repeat(150) });
+  });
+
+  it("keeps emoji in the title", () => {
+    expect(splitTitle("🎄 Family Movie Night\nТекст").title).toBe(
+      "🎄 Family Movie Night",
+    );
   });
 });
 
@@ -49,6 +62,16 @@ describe("collapseBlankLines and shorten", () => {
     expect(short.length).toBeLessThanOrEqual(101);
     expect(short.endsWith("слово…")).toBe(true);
     expect(shorten("коротко", 100)).toBe("коротко");
+  });
+
+  it("never cuts an emoji in half", () => {
+    // No spaces, so the cut falls at max - 40 = 60: inside the 8-unit emoji.
+    const text = "а".repeat(59) + "👨‍👩‍👧" + "б".repeat(60);
+    expect(shorten(text, 100)).toBe("а".repeat(59) + "…");
+    const whole = "а".repeat(55) + "🎄" + "б".repeat(60);
+    expect(shorten(whole, 100)).toBe(
+      "а".repeat(55) + "🎄" + "б".repeat(3) + "…",
+    );
   });
 });
 
@@ -83,6 +106,15 @@ describe("toNewsItem", () => {
       text: { ru: "Текст поста" },
       image: "/news/fb/1.jpg",
       link: "https://www.facebook.com/reel/2093030784720629/",
+    });
+  });
+
+  it("turns a one-line post into a title-only card", () => {
+    expect(
+      toNewsItem({ ...post, message: "Встреча с поэзией — 29 ноября!!!" }),
+    ).toMatchObject({
+      title: { ru: "Встреча с поэзией — 29 ноября!!!" },
+      text: {},
     });
   });
 

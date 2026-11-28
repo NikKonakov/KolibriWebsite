@@ -42,28 +42,52 @@ export function collapseBlankLines(text) {
 /**
  * Uses a post's first line as the card title when it's short, as in
  * "«Стихи с чаем» — поэтическая встреча"; the rest becomes the text.
+ * A post that is one short line ("Встреча с поэзией — 29 ноября!") is all
+ * headline: it gets the title style and an empty text, instead of looking
+ * like a small grey note next to cards that have titles.
  * @param {string} message
  * @returns {{ title?: string, text: string }}
  */
 export function splitTitle(message) {
   const [first, ...rest] = message.split("\n");
-  const body = rest.join("\n").trim();
-  return first.trim().length <= MAX_TITLE && body
-    ? { title: first.trim(), text: body }
-    : { text: message };
+  const head = first.trim();
+  if (head.length > MAX_TITLE) return { text: message };
+  return { title: head, text: rest.join("\n").trim() };
+}
+
+/** Splits text into user-perceived characters (emoji included). */
+const CHARACTERS = new Intl.Segmenter("ru", { granularity: "grapheme" });
+
+/**
+ * Returns the longest start of `text` that is at most `limit` code units long
+ * and ends between two whole characters. An emoji such as 👨‍👩‍👧 is 8 code
+ * units; slicing through it would leave a broken symbol (�) on the card.
+ * @param {string} text
+ * @param {number} limit
+ * @returns {string}
+ */
+function wholeCharsPrefix(text, limit) {
+  let end = 0;
+  for (const { index, segment } of CHARACTERS.segment(text)) {
+    const next = index + segment.length;
+    if (next > limit) break;
+    end = next;
+  }
+  return text.slice(0, end);
 }
 
 /**
  * Shortens text longer than `max` at a word boundary and adds "…".
+ * Never cuts an emoji or any other character in half.
  * @param {string} text
  * @param {number} [max]
  * @returns {string}
  */
 export function shorten(text, max = MAX_TEXT) {
   if (text.length <= max) return text;
-  const cut = text.slice(0, max);
-  const lastSpace = cut.lastIndexOf(" ");
-  return cut.slice(0, Math.max(lastSpace, max - 40)).trimEnd() + "…";
+  const lastSpace = text.slice(0, max).lastIndexOf(" ");
+  const end = Math.max(lastSpace, max - 40);
+  return wholeCharsPrefix(text, end).trimEnd() + "…";
 }
 
 /**
@@ -112,7 +136,8 @@ export function toNewsItem(post, image) {
   return {
     date,
     ...(title && { title: { ru: title } }),
-    text: { ru: shorten(text) },
+    // A one-line post is all title: its text stays empty.
+    text: text ? { ru: shorten(text) } : {},
     ...(image && { image }),
     ...(link && { link }),
   };

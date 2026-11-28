@@ -25,7 +25,7 @@ export default function NewsSection() {
     },
   );
   // Facebook posts are in Russian only; the English page says so once.
-  const languageNote = news.some((item) => !item.text[lang])
+  const languageNote = news.some((item) => !hasLanguage(item, lang))
     ? t.news.otherLanguageNote
     : undefined;
 
@@ -74,10 +74,16 @@ export default function NewsSection() {
   );
 }
 
+/** True when the post has a title or text in the given language. */
+function hasLanguage(item: NewsItem, lang: Lang): boolean {
+  return Boolean(item.title?.[lang] || item.text[lang]);
+}
+
 /**
  * One news card: photo, date, optional title, the start of the text and a
- * link to the full post. Text missing in the page language is shown in
- * Russian and marked lang="ru" so screen readers pronounce it correctly.
+ * link to the full post. A one-line post has a title and no text. Words
+ * missing in the page language are shown in Russian and marked lang="ru" so
+ * screen readers pronounce them correctly.
  */
 function NewsCard({
   item,
@@ -90,8 +96,9 @@ function NewsCard({
   date: string;
   readMore: string;
 }) {
-  const textLang: Lang = item.text[lang] ? lang : "ru";
+  const textLang: Lang = hasLanguage(item, lang) ? lang : "ru";
   const title = item.title?.[textLang];
+  const text = item.text[textLang];
 
   return (
     <article
@@ -119,9 +126,11 @@ function NewsCard({
             {title}
           </h3>
         )}
-        <p className="line-clamp-6 whitespace-pre-line text-[15px] text-kolibri-muted">
-          {item.text[textLang]}
-        </p>
+        {text && (
+          <p className="line-clamp-6 whitespace-pre-line text-[15px] text-kolibri-muted">
+            {text}
+          </p>
+        )}
         {item.link && (
           <ExternalLink
             href={item.link}

@@ -3,9 +3,12 @@ import type { Lang } from "@/i18n/detect";
 export interface NewsItem {
   /** ISO date, e.g. "2026-09-06" */
   date: string;
-  /** Optional headline. Facebook posts have none. */
+  /** Optional headline: for Facebook posts, a short first line. */
   title?: Partial<Record<Lang, string>>;
-  /** Text per language. Posts imported from Facebook only have "ru". */
+  /**
+   * Text per language. Posts imported from Facebook only have "ru", and a
+   * one-line post has none: its line is the title.
+   */
   text: Partial<Record<Lang, string>>;
   image?: string;
   link?: string;
